@@ -31,7 +31,13 @@
             ],
             "styles": [
               "src/styles.scss"
-            ]
+            ], 
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/shared/scss/theme",
+                "src/app/shared/scss/mixins"
+              ]
+            }
           },
           "configurations": {
             "production": {

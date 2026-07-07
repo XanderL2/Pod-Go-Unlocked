@@ -1,0 +1,26 @@
+@use 'theme';
+@use 'layout-mixins' as *;
+
+
+.footer {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+  padding: 1rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  @include flex(center, center, column);
+  gap: 0.3rem;
+
+  &__social {
+    margin-top: 0.5rem;
+    color: var(--color-primary);
+    @include flex();
+    gap: 1rem;
+  }
+
+  &__copyright {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+  }
+
+}

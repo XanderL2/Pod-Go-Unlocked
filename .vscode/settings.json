@@ -1,0 +1,10 @@
+{
+
+    //* Angular schematics config
+    "angular-schematics.schematicsDefaultOptions": {
+        "angular-*": {
+            "externalTemplate": true,
+            "style": "scss"
+        }
+    }
+}

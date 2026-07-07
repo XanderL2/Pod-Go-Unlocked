@@ -1,0 +1,10 @@
+@if (safeSvg()) {
+    <div 
+        [ngClass]="[
+            'icon__' + color(), 
+            'icon__' + size()
+        ]" 
+        [innerHTML]="safeSvg()">
+        
+    </div>
+}

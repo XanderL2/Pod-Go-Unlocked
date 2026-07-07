@@ -1,0 +1,35 @@
+@use 'colors';
+
+.icon {
+
+  // Colors
+  &__primary {
+    color: var(--color-primary);
+  }
+
+  &__secondary {
+    color: var(--color-secondary);
+  }
+
+  &__tertiary {
+    color: var(--color-tertiary);
+  }
+
+
+  // Sizes
+  &__sm {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  &__md {
+    height: 5rem;
+    width: 5rem;
+  }
+
+  &__lg {
+    height: 7.5rem;
+    width:  7.5rem;
+  }
+
+}
