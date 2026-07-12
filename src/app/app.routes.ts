@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { UNLOCK_PRESET_ROUTES } from './features/unlock-preset/unlock-preset.routes';
-import { UnlockPresetPage } from './features/unlock-preset/unlock-preset-page/unlock-preset-page';
+import { UNLOCK_PRESET_ROUTES } from './features/presets/preset.routes';
+import { UnlockPresetPage } from './features/presets/presentation/unlock-preset/unlock-preset-page';
 
 export const routes: Routes = [
   {

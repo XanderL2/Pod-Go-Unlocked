@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FileInput } from "../../../shared/components/inputs/file-input/file-input";
+import { FileInput } from "../../../../shared/components/inputs/file-input/file-input";
 
 @Component({
   selector: 'app-unlock-preset-page',
@@ -16,6 +16,9 @@ export class UnlockPresetPage {
 
 
   handlePresetUpload(files: FileList ) {
+
+    // TODO: Implements new architecture 
+    // TODO: Implement handle preset upload
 
     console.log(files);
 

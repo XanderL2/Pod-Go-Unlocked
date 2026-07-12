@@ -1,8 +1,0 @@
-@use 'theme';
-@use 'layout-mixins' as *;
-
-
-.main {
-  @include flex(center, flex-start, column);
-
-}
