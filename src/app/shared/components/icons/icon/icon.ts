@@ -26,6 +26,7 @@ export class Icon {
   url = input.required<string>();
   color = input<IconColor>('primary') ;
   size = input<IconSize>('sm');
+  label = input<string | null>();
 
   // Services
   private http = inject(HttpClient);

@@ -1,0 +1,32 @@
+@use 'colors';
+@use 'layout-mixins' as *;
+@use 'responsive-utilities' as *;
+
+
+.main {
+
+  &__content {
+    color: var(--color-on-background);
+    padding: 2rem;
+    @include flex(flex-start, center, column);
+    gap: 2rem;
+
+    &--titles {
+      @include flex(center, center, column);
+      text-align: center;
+    }
+
+    &--dropZone {
+      align-self: stretch;
+      width: 100%;
+      max-width: 700px;
+
+      @include screen('md') {
+        align-self: auto;
+        width: 70%;
+      }
+    
+    }
+  }
+
+}

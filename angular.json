@@ -35,7 +35,8 @@
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/app/shared/scss/theme",
-                "src/app/shared/scss/mixins"
+                "src/app/shared/scss/mixins",
+                "src/app/shared/scss/responsive"
               ]
             }
           },

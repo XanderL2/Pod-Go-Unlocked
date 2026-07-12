@@ -1,0 +1,25 @@
+<label
+  class="dropZone"
+  [class.dragEnter]="isDragging()"
+  (dragover)="dragEnter($event)"
+  (dragleave)="dragLeave($event)"
+  (drop)="dropFile($event)"
+>
+  <input 
+    class="inputFile" 
+    type="file" 
+    [accept]="accept()"
+    (change)="selectFile($event)"
+  />
+  <p>{{ label() }}</p>
+
+  @if (iconUrl()) {
+    <div class="dropZone__icons">
+      <app-icon 
+        class="icon" 
+        [url]="isDragging() ? dragIcon()! : iconUrl()!" 
+        size="md"
+      />
+    </div>
+  }
+</label>

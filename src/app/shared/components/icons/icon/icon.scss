@@ -1,4 +1,5 @@
 @use 'colors';
+@use 'transitions' as *;
 
 .icon {
 
@@ -20,16 +21,20 @@
   &__sm {
     height: 1.5rem;
     width: 1.5rem;
+
+    &:hover {
+      @include transitionScale(1.2);
+    }
   }
 
   &__md {
-    height: 5rem;
-    width: 5rem;
+    height: 3rem;
+    width: 3rem;
   }
 
   &__lg {
-    height: 7.5rem;
-    width:  7.5rem;
+    height: 4.5rem;
+    width:  4.5rem;
   }
 
 }

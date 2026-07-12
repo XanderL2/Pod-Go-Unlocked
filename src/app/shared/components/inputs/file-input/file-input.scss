@@ -1,0 +1,36 @@
+@use 'colors';
+@use 'transitions' as *;
+@use 'layout-mixins' as *;
+
+.inputFile {
+  display: none;
+}
+
+.dropZone {
+
+  @include flex(center, center, column);
+  gap: 0.5rem;
+  min-height: 150px;
+  width: 100%;
+  padding: 2rem;
+  transition: all 0.05s ease-in-out;
+  background-color: var(--color-surface-container-low);
+  border: 2px dashed var(--color-outline-variant);
+  border-radius: 1rem;
+  color: var(--color-on-surface-variant);
+
+  cursor: pointer;
+
+  &__icons {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  &:hover,
+  &.dragEnter {
+    @include transitionScale(1.02);
+    border: 2px dashed var(--color-outline);
+  }
+
+}
+

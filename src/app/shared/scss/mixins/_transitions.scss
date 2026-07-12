@@ -1,4 +1,12 @@
-@mixin transitionScale($scale, $time: 0.5s){
-    transition: all $time;
-    scale: $scale;
+@mixin transitionScale(
+  $scale,
+  $duration: .5s
+) {
+  transition: transform $duration cubic-bezier(.34, 1.56, .64, 1);
+  transform: scale($scale);
+}
+
+@mixin fadeIn($duration: .5s) {
+  transition: opacity $duration ease-in-out;
+  opacity: 1;
 }
