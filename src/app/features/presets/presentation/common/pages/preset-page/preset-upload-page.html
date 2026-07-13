@@ -1,0 +1,18 @@
+<main class="main">
+  <section class="main__content">
+    <div class="main__content--titles">
+      <h1>Unlock your preset</h1>
+      <p>Drag and drop or select your preset for unlock</p>
+    </div>
+    <div class="main__content--dropZone">
+      <app-file-input
+        accept=".pgp"
+        label="Drop your PodGo Preset here!"
+        iconUrl="icons/guitar-amp.svg"
+        dragIcon="icons/upload.svg"
+        (filesDropped)="handlePresetUpload($event)"
+      />
+    </div>
+  </section>
+</main>
+

@@ -1,27 +1,22 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FileInput } from "../../../../shared/components/inputs/file-input/file-input";
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FileInput } from '../../../../shared/components/inputs/file-input/file-input';
+import { PresetEditorState } from '../preset-editor/services/preset-editor-state';
+import { PresetUploadPage } from "../common/pages/preset-page/preset-upload-page";
+import { Preset } from '../../data/models/preset-models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-unlock-preset-page',
-  imports: [FileInput],
+  imports: [PresetUploadPage],
   templateUrl: './unlock-preset-page.html',
-  styleUrl: './unlock-preset-page.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UnlockPresetPage {
 
+  private presetEditorState = inject(PresetEditorState);
+  private router = inject(Router);
 
-
-
-
-
-  handlePresetUpload(files: FileList ) {
-
-    // TODO: Implements new architecture 
-    // TODO: Implement handle preset upload
-
-    console.log(files);
-
+  navigateToPresetEditor(uploadedPreset: Preset) {
+    this.presetEditorState.loadPresetToEditor(uploadedPreset);
+    this.router.navigate(['preset-editor']);
   }
-
 }
