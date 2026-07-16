@@ -1,5 +1,5 @@
 @use 'colors';
-@use 'transitions' as *;
+@use 'animation-mixins' as *;
 @use 'layout-mixins' as *;
 
 .inputFile {
@@ -18,8 +18,8 @@
   border: 2px dashed var(--color-outline-variant);
   border-radius: 1rem;
   color: var(--color-on-surface-variant);
-
   cursor: pointer;
+  @include transition(scale, $fast-duration);
 
   &__icons {
     width: 3rem;
@@ -28,7 +28,7 @@
 
   &:hover,
   &.dragEnter {
-    @include transitionScale(1.02);
+    scale: 1.02;
     border: 2px dashed var(--color-outline);
   }
 

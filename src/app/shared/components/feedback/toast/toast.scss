@@ -1,0 +1,72 @@
+@use 'colors';
+@use 'layout-mixins' as *;
+@use 'responsive-utilities' as *;
+@use 'animation-mixins' as *;
+@use 'animations' as *;
+
+
+.toast {
+  
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  width: fit-content;
+  max-width: 250px;
+  font-size: 1rem;
+  @include flex();
+  gap: 0.8rem;
+
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2;
+  
+  &__content {
+
+    &--title {
+      font-weight: 550;
+      font-size: 1rem;
+    }
+
+    &--description {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+  }
+
+  &__visible {
+    @include animation(slide-in-up, $fast-duration);
+  }
+
+  &__hidden {
+    @include animation(slide-in-down);
+  }
+
+
+  &__icon {
+    padding: 0.5rem;
+    border-radius: 50%;
+  }
+
+
+  // Toast styles
+  &__error {
+    background-color: var(--color-error-container);
+    color: var(--color-on-error-container);
+
+    .toast__icon {
+      background-color: var(--color-error);
+    }
+  }
+  
+
+  @include screen('sm') {
+    max-width: 300px;
+  }
+
+  @include screen('md') {
+    max-width: 350px;
+  }
+
+}
+

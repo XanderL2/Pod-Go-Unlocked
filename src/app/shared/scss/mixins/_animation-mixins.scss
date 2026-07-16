@@ -1,0 +1,33 @@
+$fast-duration: 150ms;
+$middle-duration: 300ms;
+$large-duration: 600ms;
+
+
+/*
+  Using one property:
+  - @include transition(scale, 0.5s, ease-in);
+  
+  Using multiple properties:
+  - @include transition((color, transform), 300ms, ease-in-out);
+*/
+@mixin transition($properties: all, $duration: $middle-duration, $curve: ease-in-out) {
+  transition-property: $properties;
+  transition-duration: $duration;
+  transition-timing-function: $curve;
+}
+
+
+/*
+  Using default settings (just the @keyframes name):
+  - @include animation(slide-in-up);
+  
+  Using custom duration and curve:
+  - @include animation(fade-out, 0.5s, ease-out);
+*/
+@mixin animation($name, $duration: $middle-duration, $curve: ease-in-out) {
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-timing-function: $curve;
+  animation-fill-mode: forwards; 
+}
+

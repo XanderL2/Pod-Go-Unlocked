@@ -10,7 +10,7 @@ import {
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 
-type IconColor = 'primary' | 'secondary' | 'tertiary';
+type IconColor = 'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success';
 type IconSize = 'lg' | 'md' | 'sm';
 
 @Component({

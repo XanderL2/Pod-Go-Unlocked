@@ -1,7 +1,9 @@
 @use 'colors';
-@use 'transitions' as *;
+@use 'animation-mixins' as *;
 
 .icon {
+
+  @include transition(scale, $middle-duration);
 
   // Colors
   &__primary {
@@ -16,6 +18,9 @@
     color: var(--color-tertiary);
   }
 
+  &__error {
+    color: var(--color-on-error);
+  }
 
   // Sizes
   &__sm {
@@ -23,7 +28,7 @@
     width: 1.5rem;
 
     &:hover {
-      @include transitionScale(1.2);
+      scale: 1.2;
     }
   }
 

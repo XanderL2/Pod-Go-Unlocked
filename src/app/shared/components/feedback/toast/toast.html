@@ -1,0 +1,26 @@
+
+@if (activeToast()) {
+  <div
+    class="toast"
+    [class]="toastClassStyle()"
+    animate.enter="toast__visible"
+    animate.leave="toast__hidden"
+  >
+    <div class="toast__icon">
+      <app-icon
+        size="sm"
+        [url]="'icons/' + (activeToast()?.type || 'error') + '.svg'"
+        [color]="activeToast()?.type || 'error'"
+      ></app-icon>
+    </div>
+
+    <div class="toast__content">
+      <h4 class="toast__content--title">
+        {{ activeToast()?.title || 'No title' }}
+      </h4>
+      <p class="toast__content--description">
+        {{ activeToast()?.description || 'No description' }}
+      </p>
+    </div>
+  </div>
+}
