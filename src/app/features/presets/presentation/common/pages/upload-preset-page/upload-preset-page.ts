@@ -2,6 +2,7 @@ import { Component, inject, input, output } from "@angular/core";
 import { FileInput } from "../../../../../../shared/components/inputs/file-input/file-input";
 import { PresetEditorState } from "../../../preset-editor/services/preset-editor-state";
 import { Preset } from "../../../../data/models/preset-models";
+import { ToastLauncher } from '../../../../../../shared/components/feedback/toast/controller/toast-launcher';
 
 @Component({
   selector: 'app-upload-preset-page',
@@ -20,6 +21,7 @@ export class UploadPresetPage {
 
   // Services:
   private presetEditorState = inject(PresetEditorState);
+  private toastLauncher = inject(ToastLauncher);
 
   async handlePresetUpload(files: FileList) {
     
@@ -32,7 +34,7 @@ export class UploadPresetPage {
       this.submitPreset.emit(preset);
 
     } catch (error) {
-      console.error('Error handled', error);
+      this.toastLauncher.error("Oops! An error occurred.", error as string);
     }
   }
 
