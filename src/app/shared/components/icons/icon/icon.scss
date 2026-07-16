@@ -3,7 +3,7 @@
 
 .icon {
 
-  @include transition(scale, $middle-duration);
+  @include transition(all, $fast-duration);
 
   // Colors
   &__primary {

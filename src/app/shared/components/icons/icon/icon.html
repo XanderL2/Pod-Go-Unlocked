@@ -1,5 +1,6 @@
 @if (safeSvg()) {
   <div
+    class="icon"
     [ngClass]="['icon__' + color(), 'icon__' + size()]"
     [innerHTML]="safeSvg()"
     [attr.aria-hidden]="label() ? null : 'true'"
