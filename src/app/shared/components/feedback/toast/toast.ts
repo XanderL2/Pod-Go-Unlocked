@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { Icon } from '../../icons/icon/icon';
-import { ToastLauncher, ToastNotification } from './controller/toast-controller';
+import { ToastLauncher } from './controller/toast-launcher';
 import { CommonModule } from '@angular/common';
 
 @Component({

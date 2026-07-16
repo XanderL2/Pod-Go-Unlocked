@@ -4,12 +4,12 @@ import { PresetEditorState } from "../../../preset-editor/services/preset-editor
 import { Preset } from "../../../../data/models/preset-models";
 
 @Component({
-  selector: 'app-preset-upload-page',
+  selector: 'app-upload-preset-page',
   imports: [FileInput],
-  templateUrl: './preset-upload-page.html',
-  styleUrl: './preset-upload-page.scss',
+  templateUrl: './upload-preset-page.html',
+  styleUrl: './upload-preset-page.scss',
 })
-export class PresetUploadPage {
+export class UploadPresetPage {
 
   // Inputs:
   title = input.required<string>();
