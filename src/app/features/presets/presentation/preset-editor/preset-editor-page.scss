@@ -1,3 +1,23 @@
-:host {
-  display: block;
+@use 'colors';
+@use 'layout-mixins' as *;
+@use 'responsive-utilities' as *;
+
+
+
+.preset {
+
+  padding: 2rem;
+  color: var(--color-on-background);
+
+  &__details {
+    @include flex(flex-start, center, column);
+    gap: 0.5rem;
+  }
+
+
+  &__effectsSetup {
+
+  }
+
 }
+

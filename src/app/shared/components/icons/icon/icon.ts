@@ -1,17 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
 
-type IconColor = 'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success';
-type IconSize = 'lg' | 'md' | 'sm';
+type IconColor =
+  'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success' | 'currentColor';
+type IconSize = 'lg' | 'md' | 'sm' | 'flexible';
 
 @Component({
   selector: 'app-icon',
@@ -21,10 +16,9 @@ type IconSize = 'lg' | 'md' | 'sm';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Icon {
-  
   // Inputs
   url = input.required<string>();
-  color = input<IconColor>('primary') ;
+  color = input<IconColor>('currentColor');
   size = input<IconSize>('sm');
   label = input<string | null>();
 
@@ -42,6 +36,4 @@ export class Icon {
     const val = this.iconResource.value();
     return val ? this.sanitizer.bypassSecurityTrustHtml(val) : null;
   });
-
-
 }

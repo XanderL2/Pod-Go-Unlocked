@@ -1,1 +1,21 @@
-<p>preset-editor-page works!</p>,
+@let name = activePreset()?.data?.meta?.name;
+@let version = activePreset()?.version;
+
+
+<main class="preset">
+
+    <section class="preset__details">
+        <h1>Unlock your preset</h1>
+        <h3>{{ name }} - Version: {{ version }}</h3>
+    </section>
+
+    <section class="preset__effectBlocks">
+        <app-effect-block name="random" type="modulation" iconUrl="icons/modulation-pedal.svg"/>
+        <app-effect-block name="random" type="modulation" iconUrl="icons/expression-pedal.svg"/>
+        <app-effect-block name="random" type="modulation" iconUrl="icons/head-amp.svg"/>
+        <app-effect-block name="random" type="modulation" iconUrl="icons/basic-pedal.svg"/>
+        <app-effect-block name="random" type="modulation" iconUrl="icons/cabinet-amp.svg"/>
+    </section>
+
+
+</main>
