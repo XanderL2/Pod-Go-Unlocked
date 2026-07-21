@@ -1,7 +1,7 @@
 import { Component, inject, input, output } from "@angular/core";
 import { FileInput } from "../../../../../../shared/components/inputs/file-input/file-input";
 import { PresetEditorState } from "../../../preset-editor/services/preset-editor-state";
-import { Preset } from "../../../../data/models/preset-models";
+import { RawPodGoPreset } from "../../../../data/models/preset-models";
 import { ToastLauncher } from '../../../../../../shared/components/feedback/toast/controller/toast-launcher';
 
 @Component({
@@ -17,7 +17,7 @@ export class UploadPresetPage {
   subTitle = input.required<string>();
 
   // Outputs:
-  submitPreset = output<Preset>();
+  submitPreset = output<RawPodGoPreset>();
 
   // Services:
   private presetEditorState = inject(PresetEditorState);

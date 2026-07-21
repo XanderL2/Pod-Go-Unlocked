@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Preset } from '../../data/models/preset-models';
+import { RawPodGoPreset } from '../../data/models/preset-models';
 import { PresetRepository } from '../repositories/preset-repository';
 import { PresetRepositoryImpl } from '../../data/preset-repository-impl';
 
@@ -11,7 +11,7 @@ export class UnlockPresetUseCase {
   private _repositoryImpl: PresetRepository = inject(PresetRepositoryImpl);
 
 
-  removeLockedEffect(preset: Preset): Preset {
+  removeLockedEffect(preset: RawPodGoPreset): RawPodGoPreset {
     // todo: implements remove locked effect function
     return preset;
   }

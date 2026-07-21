@@ -1,8 +1,8 @@
-import { Preset } from "../../data/models/preset-models";
+import { RawPodGoPreset } from "../../data/models/preset-models";
 
 export abstract class PresetRepository {
-    abstract loadPresetFromRawString(jsonString: string): Preset;
-    abstract unlockPresetBlock(preset: Preset): Preset; 
-    abstract restorePresetBlock(preset: Preset): Preset; 
-    abstract getUnlockedTemplates(preset: Preset): Preset; 
+    abstract loadPresetFromRawString(jsonString: string): RawPodGoPreset;
+    abstract unlockPresetBlock(preset: RawPodGoPreset): RawPodGoPreset; 
+    abstract restorePresetBlock(preset: RawPodGoPreset): RawPodGoPreset; 
+    abstract getUnlockedTemplates(preset: RawPodGoPreset): RawPodGoPreset; 
 }

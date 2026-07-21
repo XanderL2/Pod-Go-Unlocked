@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Preset } from '../models/preset-models';
+import { RawPodGoPreset } from '../models/preset-models';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ export class PresetFileDataSource {
   /**
    * Takes the raw string from the .pgp file and turns it into a structured Preset object.
    */
-  toPresetModel(jsonString: string): Preset {
+  toPresetModel(jsonString: string): RawPodGoPreset {
     try {
 
       const parsedData = JSON.parse(jsonString);
@@ -22,7 +22,7 @@ export class PresetFileDataSource {
         throw new Error('Unsupported device. This file is not for POD Go.');
       }
 
-      return parsedData as Preset;
+      return parsedData as RawPodGoPreset;
 
     } catch (error) {
       throw new Error(`Failed to parse preset file: ${(error as Error).message}`);

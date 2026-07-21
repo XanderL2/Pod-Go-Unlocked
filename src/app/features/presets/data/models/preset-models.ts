@@ -1,12 +1,7 @@
 /**
- * A list of multiple presets.
- */
-export type PresetList = Preset[];
-
-/**
  * The root structure of a POD Go preset file (.pgp).
  */
-export interface Preset {
+export interface RawPodGoPreset {
     /** Main container for sound and hardware data */
     data: Data;
     /** File type data from the Line 6 store */
