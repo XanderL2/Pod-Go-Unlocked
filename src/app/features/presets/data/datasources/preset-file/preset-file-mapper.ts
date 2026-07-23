@@ -116,7 +116,7 @@ export class PresetFileMapper {
     if(this.hasCategoryPrefixes(name, CAB_IR_BLOCK_PREFIXES)) return BlockCategory.CAB_IR_BLOCK;
     if(this.hasCategoryPrefixes(name, FX_LOOP_BLOCK_PREFIXES)) return BlockCategory.FX_LOOP;
 
-    return BlockCategory.EMPTY_BLOCK;
+    return BlockCategory.UNKNOWN;
   }
 
   private static hasCategoryPrefixes(name: string, prefixes: string[]): boolean {

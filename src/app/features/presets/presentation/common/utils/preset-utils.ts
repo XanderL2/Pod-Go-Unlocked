@@ -15,6 +15,10 @@ export const BLOCK_ICON_MAP: Record<BlockCategory, string> = {
   // Empty block
   [BlockCategory.EMPTY_BLOCK]: `${ASSET_PATHS.icons.presetBlocks}/empty-pedal.svg`,
 
+  // Empty block
+  [BlockCategory.UNKNOWN]: `${ASSET_PATHS.icons.presetBlocks}/basic-pedal.svg`,
+
+
   // Standard default icons 
   [BlockCategory.DIST]: `${ASSET_PATHS.icons.presetBlocks}/basic-pedal.svg`,
   [BlockCategory.DYNAMIC]: `${ASSET_PATHS.icons.presetBlocks}/basic-pedal.svg`,

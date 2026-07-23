@@ -78,4 +78,96 @@
     --color-shadow: rgb(0 0 0);
     --color-scrim: rgb(0 0 0);
 
+
+    //- Extended colors:
+
+    /* Distortion */
+    --color-dist: rgb(252 185 116);
+    --color-on-dist: rgb(73 41 0);
+    --color-dist-container: rgb(105 60 0);
+    --color-on-dist-container: rgb(255 220 189);
+
+    /* Dynamic */
+    --color-dynamic: rgb(224 196 109);
+    --color-on-dynamic: rgb(60 47 0);
+    --color-dynamic-container: rgb(86 69 0);
+    --color-on-dynamic-container: rgb(254 224 134);
+
+    /* EQ */
+    --color-eq: rgb(217 199 111);
+    --color-on-eq: rgb(57 48 0);
+    --color-eq-container: rgb(82 71 0);
+    --color-on-eq-container: rgb(246 227 136);
+
+    /* Modulation */
+    --color-modulation: rgb(196 192 255);
+    --color-on-modulation: rgb(44 41 96);
+    --color-modulation-container: rgb(67 64 120);
+    --color-on-modulation-container: rgb(227 223 255);
+
+    /* Delay */
+    --color-delay: rgb(163 211 152);
+    --color-on-delay: rgb(13 56 14);
+    --color-delay-container: rgb(37 80 34);
+    --color-on-delay-container: rgb(190 240 178);
+
+    /* Reverb */
+    --color-reverb: rgb(137 208 237);
+    --color-on-reverb: rgb(0 53 69);
+    --color-reverb-container: rgb(0 77 98);
+    --color-on-reverb-container: rgb(186 234 255);
+
+    /* Pitch */
+    --color-pitch: rgb(255 176 201);
+    --color-on-pitch: rgb(84 29 51);
+    --color-pitch-container: rgb(111 51 73);
+    --color-on-pitch-container: rgb(255 217 226);
+
+    /* Filter */
+    --color-filter: rgb(221 198 110);
+    --color-on-filter: rgb(58 48 0);
+    --color-filter-container: rgb(84 70 0);
+    --color-on-filter-container: rgb(250 226 135);
+
+    /* Looper */
+    --color-looper: rgb(255 181 153);
+    --color-on-looper: rgb(85 32 9);
+    --color-looper-container: rgb(113 54 29);
+    --color-on-looper-container: rgb(255 219 206);
+
+    /* Wah */
+    --color-wah: rgb(209 188 253);
+    --color-on-wah: rgb(55 38 93);
+    --color-wah-container: rgb(78 61 117);
+    --color-on-wah-container: rgb(234 221 255);
+
+    /* Amp & Cab IR */
+    --color-amp-cab-ir: rgb(255 179 181);
+    --color-on-amp-cab-ir: rgb(86 29 34);
+    --color-amp-cab-ir-container: rgb(115 51 55);
+    --color-on-amp-cab-ir-container: rgb(255 218 218);
+
+    /* Volume */
+    --color-volume: rgb(128 212 212);
+    --color-on-volume: rgb(0 55 55);
+    --color-volume-container: rgb(0 79 80);
+    --color-on-volume-container: rgb(156 241 241);
+
+    /* FX Loop */
+    --color-fx_loop: rgb(160 202 253);
+    --color-on-fx_loop: rgb(0 50 88);
+    --color-fx_loop-container: rgb(25 73 117);
+    --color-on-fx_loop-container: rgb(209 228 255);
+
+    /* Empty Slot */
+    --color-empty: rgb(130 130 130);
+    --color-on-empty: rgb(30 30 30);
+    --color-empty-container: rgb(45 45 45);
+    --color-on-empty-container: rgb(180 180 180);
+
+    /* Unknown Slot */
+    --color-unknown: rgb(222 178 246);
+    --color-on-unknown: rgb(64 34 85);
+    --color-unknown-container: rgb(89 57 110);
+    --color-on-unknown-container: rgb(243 216 255);
 }

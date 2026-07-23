@@ -27,13 +27,16 @@ export enum BlockCategory {
     LOOPER = 'LOOPER',
 
     // Special pedal block
-    WAH_BLOCK = 'WAH_BLOCK',
-    AMP_BLOCK = 'AMP_BLOCK',
-    CAB_IR_BLOCK = 'CAB_BLOCK',
-    VOLUME_BLOCK = 'VOLUME_BLOCK',
+    WAH_BLOCK = 'WAH',
+    AMP_BLOCK = 'AMP',
+    CAB_IR_BLOCK = 'CAB',
+    VOLUME_BLOCK = 'VOLUME',
     FX_LOOP = 'FX_LOOP',
 
     // Empty
-    EMPTY_BLOCK = 'EMPTY_BLOCK'
+    EMPTY_BLOCK = 'EMPTY',
+
+    // Unknow
+    UNKNOWN = 'UNKNOWN'
 }
 

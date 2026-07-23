@@ -11,6 +11,7 @@
 
     &__name {
         margin-top: 0.5rem;
+        @include transition(transform color, $fast-duration)
     }
 
     &__icon {
@@ -21,21 +22,46 @@
         @include flex();
         @include transition(scale background-color border-color, $fast-duration);
         padding: 1.225rem;
-        border: 2px solid var(--color-outline-variant);
-        background-color: var(--color-surface-container-low);
-        color: var(--color-on-surface-variant);
-
-        .effectBlock:hover &,
-        &:focus-visible {
-            scale: 1.05;
-            border-color: var(--color-primary);
-            background-color: var(--color-surface-container);
-        }
 
         &:focus-visible {
-            outline: 2px solid var(--color-primary);
             outline-offset: 2px;
         }
     }
 
+
+    &:hover {
+        .effectBlock__icon {
+            scale: 1.05;
+        }
+
+        .effectBlock__name {
+            transform: translateY(-2px);
+        }
+    }
+}
+
+$categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 'filter', 'looper', 'wah', 'volume', 'fx_loop', 'empty', 'amp-cab-ir', 'unknown';
+
+
+@each $category in $categories {
+  .effectBlock__#{$category} {
+    color: var(--color-on-#{$category}-container);
+
+    .effectBlock__icon {
+      border: 2px solid var(--color-#{$category}-container);
+      background-color: var(--color-on-#{$category});
+      color: var(--color-on-#{$category}-container);
+    }
+
+    &:hover {
+      .effectBlock__name {
+        color: var(--color-#{$category});
+      }
+
+      .effectBlock__icon {
+        background-color: var(--color-#{$category}-container);
+        border-color: var(--color-on-#{$category}-container);
+      }
+    }
+  }
 }

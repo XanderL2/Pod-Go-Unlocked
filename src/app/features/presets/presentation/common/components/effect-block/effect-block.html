@@ -1,8 +1,8 @@
-<div class="effectBlock">
+<div class="effectBlock" [class]="classStyleByType()">
   <div class="effectBlock__icon" tabindex="0" role="button">
     <app-icon [url]="iconByType()" [label]="name()" size="flexible" />
   </div>
 
-  <p class="effectBlock__name">{{ name() }}</p>
+  <p class="effectBlock__name">{{ name() || 'Empty block' }}</p>
 </div>
 
