@@ -1,19 +1,19 @@
-interface Preset {
+export interface Preset {
     name: string;
-    version: string;
-    tempo: string;
+    version: number;
+    tempo: number;
     pedalSetup: PresetBlock[];
 }
 
 
-interface PresetBlock {
+export interface PresetBlock {
     name: string;
     position: number;
     enabled: boolean;
     type: BlockCategory;
 };
 
-enum BlockCategory {
+export enum BlockCategory {
 
     // Common pedal types
     DIST = 'DIST',
@@ -30,6 +30,7 @@ enum BlockCategory {
     WAH_BLOCK = 'WAH_BLOCK',
     AMP_BLOCK = 'AMP_BLOCK',
     CAB_IR_BLOCK = 'CAB_BLOCK',
+    VOLUME_BLOCK = 'VOLUME_BLOCK',
     FX_LOOP = 'FX_LOOP',
 
     // Empty

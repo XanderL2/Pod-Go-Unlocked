@@ -1,7 +1,8 @@
-<div class="effectBlock" tabindex="0" role="button">
-    <app-icon
-        [url]="iconUrl()"
-        [label]="name()"
-        size="flexible"
-    />
+<div class="effectBlock">
+  <div class="effectBlock__icon" tabindex="0" role="button">
+    <app-icon [url]="iconByType()" [label]="name()" size="flexible" />
+  </div>
+
+  <p class="effectBlock__name">{{ name() }}</p>
 </div>
+

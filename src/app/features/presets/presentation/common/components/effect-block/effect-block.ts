@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { Icon } from "../../../../../../shared/components/icons/icon/icon";
+import { BlockCategory } from '../../../../domain/entities/preset-entities';
+import { BLOCK_ICON_MAP } from '../../utils/preset-utils';
 
 @Component({
   selector: 'app-effect-block',
@@ -9,8 +11,7 @@ import { Icon } from "../../../../../../shared/components/icons/icon/icon";
 })
 export class EffectBlock {
 
-  type = input.required();
+  type = input.required<BlockCategory>();
   name = input.required<string>();
-  iconUrl = input.required<string>();
-
+  iconByType = computed(() => BLOCK_ICON_MAP[this.type()])
 }

@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FileInput } from '../../../../shared/components/inputs/file-input/file-input';
 import { PresetEditorState } from '../preset-editor/services/preset-editor-state';
 import { UploadPresetPage } from "../common/pages/upload-preset-page/upload-preset-page";
-import { RawPodGoPreset } from '../../data/models/preset-models';
+import { PodGoPresetModel } from '../../data/models/preset-models';
 import { Router } from '@angular/router';
+import { Preset } from '../../domain/entities/preset-entities';
 
 @Component({
   selector: 'app-unlock-preset-page',
@@ -15,7 +16,7 @@ export class UnlockPresetPage {
   private presetEditorState = inject(PresetEditorState);
   private router = inject(Router);
 
-  navigateToPresetEditor(uploadedPreset: RawPodGoPreset) {
+  navigateToPresetEditor(uploadedPreset: Preset) {
     this.presetEditorState.loadPresetToEditor(uploadedPreset);
     this.router.navigate(['preset-editor']);
   }

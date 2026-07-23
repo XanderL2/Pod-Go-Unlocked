@@ -9,7 +9,7 @@
     <div class="toast__icon">
       <app-icon
         size="sm"
-        [url]="'icons/' + (activeToast()?.type || 'error') + '.svg'"
+        [url]="`${feedbackIconsPath}/${(activeToast()?.type || 'error')}.svg`"
         [color]="activeToast()?.type || 'error'"
       ></app-icon>
     </div>

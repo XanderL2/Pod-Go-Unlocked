@@ -2,8 +2,21 @@
   <h4>Thank you for using!</h4>
   <p>Contact with me!</p>
   <div class="footer__social">
-    <a href=""><app-icon color="primary" url="icons/github.svg" label="github"></app-icon></a>
-    <a href=""><app-icon color="primary" url="icons/linkedin.svg" label="linkedin"></app-icon></a> 
+    <a href="">
+      <app-icon 
+        color="primary" 
+        label="github"
+        [url]="`${linksIconPath}/github.svg`"
+      />
+    </a>
+
+    <a href="">
+      <app-icon 
+        color="primary" 
+        label="linkedin"
+        [url]="`${linksIconPath}/linkedin.svg`"
+      />
+    </a> 
   </div>
   <p class="footer__copyright">Copyright (c). All Rights Reserved.</p>
 </footer>

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { Icon } from "../../icons/icon/icon";
+import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
 
 @Component({
   selector: 'app-file-input',
@@ -24,8 +25,6 @@ export class FileInput {
 
   // Properties
   isDragging = signal<boolean>(false);
-
-
 
   dragEnter(e: DragEvent): void {
     this.preventDefaultBehavior(e);

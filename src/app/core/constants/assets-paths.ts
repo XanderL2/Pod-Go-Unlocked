@@ -1,0 +1,13 @@
+const ICONS_BASE = 'icons';
+const IMAGES_BASE = 'images';
+
+export const ASSET_PATHS = {
+  icons: {
+    presetBlocks: `${ICONS_BASE}/preset-blocks`,
+    feedback: `${ICONS_BASE}/feedback`,
+    links: `${ICONS_BASE}/links`,
+  },
+  images: {
+    hero: `${IMAGES_BASE}/hero.webp`,
+  },
+} as const;

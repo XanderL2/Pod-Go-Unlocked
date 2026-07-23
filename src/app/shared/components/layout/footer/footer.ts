@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Icon } from "../../icons/icon/icon";
+import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
 
 @Component({
   selector: 'app-footer',
@@ -8,4 +9,11 @@ import { Icon } from "../../icons/icon/icon";
   styleUrl: './footer.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Footer {}
+export class Footer {
+
+  linksIconPath = ASSET_PATHS.icons.links;
+
+
+
+
+}

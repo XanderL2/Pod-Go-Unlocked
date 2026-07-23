@@ -8,8 +8,8 @@
       <app-file-input
         accept=".pgp"
         label="Drop your PodGo Preset here!"
-        iconUrl="icons/guitar-amp.svg"
-        dragIcon="icons/upload.svg"
+        [iconUrl]="`${feedbackIconsPath}/guitar-amp.svg`"
+        [dragIcon]="`${feedbackIconsPath}/upload.svg`"
         (filesDropped)="handlePresetUpload($event)"
       />
     </div>

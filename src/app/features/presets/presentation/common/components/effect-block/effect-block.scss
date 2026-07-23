@@ -2,28 +2,40 @@
 @use 'animation-mixins' as *;
 @use 'colors' as *;
 
+
+
 .effectBlock {
-    width: 6rem;
-    height: 6rem;
-    border-radius: 50%;
-    overflow: hidden;
-    @include flex();
-    @include transition(scale background-color border-color, $fast-duration);
     cursor: pointer;
-    padding: 1.225rem;
-    border: 2px solid var(--color-outline-variant);
-    background-color: var(--color-surface-container-low);
-    color: var(--color-on-surface-variant);
+    font-size: 0.8rem;
+    @include flex(center, center, column);
 
-    &:hover,
-    &:focus-visible {
-        scale: 1.05;
-        border-color: var(--color-primary);
-        background-color: var(--color-surface-container);
+    &__name {
+        margin-top: 0.5rem;
     }
 
-    &:focus-visible {
-        outline: 2px solid var(--color-primary);
-        outline-offset: 2px;
+    &__icon {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        overflow: hidden;
+        @include flex();
+        @include transition(scale background-color border-color, $fast-duration);
+        padding: 1.225rem;
+        border: 2px solid var(--color-outline-variant);
+        background-color: var(--color-surface-container-low);
+        color: var(--color-on-surface-variant);
+
+        .effectBlock:hover &,
+        &:focus-visible {
+            scale: 1.05;
+            border-color: var(--color-primary);
+            background-color: var(--color-surface-container);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
     }
+
 }

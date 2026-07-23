@@ -1,7 +1,7 @@
 /**
  * The root structure of a POD Go preset file (.pgp).
  */
-export interface RawPodGoPreset {
+export interface PodGoPresetModel {
     /** Main container for sound and hardware data */
     data: Data;
     /** File type data from the Line 6 store */

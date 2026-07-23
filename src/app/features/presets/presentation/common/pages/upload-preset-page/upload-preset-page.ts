@@ -1,8 +1,10 @@
-import { Component, inject, input, output } from "@angular/core";
+import { assertNotInReactiveContext, Component, inject, input, output } from "@angular/core";
 import { FileInput } from "../../../../../../shared/components/inputs/file-input/file-input";
 import { PresetEditorState } from "../../../preset-editor/services/preset-editor-state";
-import { RawPodGoPreset } from "../../../../data/models/preset-models";
+import { PodGoPresetModel } from "../../../../data/models/preset-models";
 import { ToastLauncher } from '../../../../../../shared/components/feedback/toast/controller/toast-launcher';
+import { Preset } from "../../../../domain/entities/preset-entities";
+import { ASSET_PATHS } from "../../../../../../core/constants/assets-paths";
 
 @Component({
   selector: 'app-upload-preset-page',
@@ -17,11 +19,15 @@ export class UploadPresetPage {
   subTitle = input.required<string>();
 
   // Outputs:
-  submitPreset = output<RawPodGoPreset>();
+  submitPreset = output<Preset>();
 
   // Services:
   private presetEditorState = inject(PresetEditorState);
   private toastLauncher = inject(ToastLauncher);
+
+  // Properties
+  feedbackIconsPath = ASSET_PATHS.icons.feedback;
+
 
   async handlePresetUpload(files: FileList) {
     
@@ -35,6 +41,7 @@ export class UploadPresetPage {
 
     } catch (error) {
       this.toastLauncher.error("Oops! An error occurred.", error as string);
+      console.error(error);
     }
   }
 
