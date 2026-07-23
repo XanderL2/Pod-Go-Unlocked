@@ -3,6 +3,6 @@
     <app-icon [url]="iconByType()" [label]="name()" size="flexible" />
   </div>
 
-  <p class="effectBlock__name">{{ name() || 'Empty block' }}</p>
+  <p class="effectBlock__name">{{ name() | blockNameFormatter: 'Empty Block' }}</p>
 </div>
 
