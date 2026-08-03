@@ -1,0 +1,18 @@
+@use 'layout-mixins' as *;
+@use 'responsive-utilities' as *;
+@use 'colors' as *;
+
+
+.pedalBoard {
+  @include flex(flex-start, center, column);
+  padding: 1.5rem;
+  border-radius: 10px;
+  gap: 2rem;
+  background-color: var(--color-surface-container-low);
+
+
+ @include screen('md') {
+    @include flex(center, center, row);
+    flex-wrap: wrap;
+  }
+}

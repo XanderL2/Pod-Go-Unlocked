@@ -1,14 +1,50 @@
 <header class="header">
-  <div class="header__logo">
-    <h3>PodGo-Unlocked</h3>
-    <p>Bypassing DSP limits!</p>
+  <div class="header__top">
+    <div class="header__logo">
+      <div class="header__logoIcon">
+        <app-icon [size]="'flexible'" [url]="identityIconsPath + '/pod-go-unlocked.svg'"></app-icon>
+      </div>
+      <div>
+        <h3>PodGo-Unlocked</h3>
+        <p>Bypassing DSP limits!</p>
+      </div>
+    </div>
+
+    <div class="header__navToggleButton">
+      <app-button color="tertiary" (click)="toggleExpandedMenu()">
+        <app-icon [size]="'sm'" [url]="feedbackIconsPath + toggleIcon()"></app-icon>
+      </app-button>
+    </div>
   </div>
 
-  <div class="header__nav">
-    <ul class="header__nav--list">
-      <li><a>Unlocked templates</a></li>
-      <li><a>Unlock a preset</a></li>
-      <li><a>Restore preset blocks</a></li>
-    </ul>
+  <div class="header__nav" [class.header__visibleNav]="menuExpanded()">
+    <div class="header__navWrapper">
+      <ul class="header__navList">
+        <li>
+          <app-button color="tertiary">
+            <div class="header__navListItem">
+              <app-icon [size]="'sm'" [url]="feedbackIconsPath + '/unlock.svg'"></app-icon>
+              Unlock Block
+            </div>
+          </app-button>
+        </li>
+        <li>
+          <app-button color="tertiary">
+            <div class="header__navListItem">
+              <app-icon [size]="'sm'" [url]="feedbackIconsPath + '/templates.svg'"></app-icon>
+              Unlocked Templates
+            </div>
+          </app-button>
+        </li>
+        <li>
+          <app-button color="tertiary">
+            <div class="header__navListItem">
+              <app-icon [size]="'sm'" [url]="feedbackIconsPath + '/restore.svg'"></app-icon>
+              Restore Block
+            </div>
+          </app-button>
+        </li>
+      </ul>
+    </div>
   </div>
 </header>

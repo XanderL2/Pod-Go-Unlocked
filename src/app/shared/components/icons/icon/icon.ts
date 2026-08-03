@@ -3,10 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ColorVariant, Size } from '../../../types/style-variants';
 
-type IconColor =
-  'primary' | 'secondary' | 'tertiary' | 'error' | 'info' | 'warning' | 'success' | 'currentColor';
-type IconSize = 'lg' | 'md' | 'sm' | 'flexible';
+type IconColor = ColorVariant | 'currentColor';
 
 @Component({
   selector: 'app-icon',
@@ -19,7 +18,7 @@ export class Icon {
   // Inputs
   url = input.required<string>();
   color = input<IconColor>('currentColor');
-  size = input<IconSize>('sm');
+  size = input<Size>('sm');
   label = input<string | null>();
 
   // Services

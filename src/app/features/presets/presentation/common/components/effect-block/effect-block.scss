@@ -3,7 +3,6 @@
 @use 'colors' as *;
 
 
-
 .effectBlock {
     cursor: pointer;
     font-size: 0.8rem;
@@ -63,5 +62,12 @@ $categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 
         border-color: var(--color-on-#{$category}-container);
       }
     }
+  }
+}
+
+// Reset for pedal icons:
+:host ::ng-deep {
+  .icon {
+    display: inline-flex;
   }
 }

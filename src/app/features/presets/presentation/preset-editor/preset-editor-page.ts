@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { PresetEditorState } from './services/preset-editor-state';
-import { EffectBlock } from "../common/components/effect-block/effect-block";
+import { PedalBoardSetup } from '../common/components/pedal-board-setup/pedal-board-setup';
 
 @Component({
   selector: 'app-preset-editor-page',
-  imports: [EffectBlock],
+  imports: [PedalBoardSetup],
   templateUrl: './preset-editor-page.html',
   styleUrl: './preset-editor-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

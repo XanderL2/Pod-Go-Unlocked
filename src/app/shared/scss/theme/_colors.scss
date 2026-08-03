@@ -1,3 +1,14 @@
+$color-variants: 
+    primary,
+    secondary,
+    tertiary,
+    error,
+    info,
+    warning,
+    success;
+
+
+
 :root {
 
     // Primary colors
@@ -20,10 +31,10 @@
     --color-on-tertiary-container: rgb(245 225 167);
 
     // Status colors
-    --color-success-color: rgb(162 211 153);
-    --color-success-on-color: rgb(12 57 14);
-    --color-success-color-container: rgb(37 80 35);
-    --color-success-on-color-container: rgb(189 240 179);
+    --color-success: rgb(162 211 153);
+    --color-on-success: rgb(12 57 14);
+    --color-success-container: rgb(37 80 35);
+    --color-on-success-container: rgb(189 240 179);
 
     --color-error: rgb(255 180 171);
     --color-on-error: rgb(105 0 5);

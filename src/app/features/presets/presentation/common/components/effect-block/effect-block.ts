@@ -11,8 +11,12 @@ import { BlockNameFormatterPipe } from '../../pipes/block-name-formatter-pipe';
   styleUrl: './effect-block.scss',
 })
 export class EffectBlock {
+
+  // Inputs: 
   type = input.required<BlockCategory>();
   name = input.required<string>();
+
+  // Properties
   iconByType = computed(() => BLOCK_ICON_MAP[this.type()]);
   classStyleByType = computed(() => {
     if (this.type() === BlockCategory.AMP_BLOCK || this.type() === BlockCategory.CAB_IR_BLOCK) {

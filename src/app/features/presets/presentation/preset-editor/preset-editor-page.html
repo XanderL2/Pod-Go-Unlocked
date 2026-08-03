@@ -1,25 +1,15 @@
-@let name = activePreset()?.name; 
+@let name = activePreset()?.name;
 @let version = activePreset()?.version;
 @let tempo = activePreset()?.tempo;
 
 <main class="preset">
+  <section class="preset__details">
+    <h1>Unlock your preset</h1>
+    <h3>{{ name }} - Version: {{ version }}</h3>
+    <p>Tempo: {{ tempo }}</p>
+  </section>
 
-    <section class="preset__details">
-        <h1>Unlock your preset</h1>
-        <h3>{{ name }} - Version: {{ version }}</h3>
-        <p>Tempo: {{ tempo }}</p>
-    </section>
-
-    <section class="preset__effectBlocks">
-
-        @for (effectBlock of activePreset()?.pedalSetup; track $index) {
-            <app-effect-block 
-                [name]="effectBlock.name" 
-                [type]="effectBlock.type" 
-            />
-        }
-
-    </section>
-
-
+  <section class="preset__pedalBoardSetup">
+    <app-pedal-board-setup [blocks]="activePreset()?.pedalSetup!" />
+  </section>
 </main>

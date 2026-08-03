@@ -1,4 +1,4 @@
-@use 'colors';
+@use 'colors' as *;
 @use 'animation-mixins' as *;
 
 :host {
@@ -8,7 +8,6 @@
 .icon {
 
   @include transition(all, $fast-duration);
-  display: inline-flex;
 
   svg {
     width: 100%;
@@ -17,27 +16,17 @@
   }
 
   // Colors
-  &__primary {
-    color: var(--color-primary);
+
+
+  @each $color in $color-variants {
+    &--#{$color} {
+      color: var(--color-#{$color});
+    }
   }
-
-  &__secondary {
-    color: var(--color-secondary);
-  }
-
-  &__tertiary {
-    color: var(--color-tertiary);
-  }
-
-  &__error {
-    color: var(--color-on-error);
-  }
-
-
 
 
   // Sizes
-  &__sm {
+  &--sm {
     width: 1.5rem;
     height: 1.5rem;
 
@@ -46,17 +35,17 @@
     }
   }
 
-  &__md {
+  &--md {
     width: 3rem;
     height: 3rem;
   }
 
-  &__lg {
+  &--lg {
     width: 4.5rem;
     height: 4.5rem;
   }
 
-  &__flexible {
+  &--flexible {
     width: 100%;
     height: 100%;
   }

@@ -6,6 +6,7 @@ export const ASSET_PATHS = {
     presetBlocks: `${ICONS_BASE}/preset-blocks`,
     feedback: `${ICONS_BASE}/feedback`,
     links: `${ICONS_BASE}/links`,
+    identity: `${ICONS_BASE}/identity`,
   },
   images: {
     hero: `${IMAGES_BASE}/hero.webp`,

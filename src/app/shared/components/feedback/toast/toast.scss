@@ -14,7 +14,6 @@
   font-size: 1rem;
   @include flex();
   gap: 0.8rem;
-
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -45,7 +44,7 @@
 
   &__icon {
     padding: 0.5rem;
-    border-radius: 50%;
+    border-radius: 100%;
   }
 
 
@@ -56,6 +55,7 @@
 
     .toast__icon {
       background-color: var(--color-error);
+      color: var(--color-on-error);
     }
   }
   

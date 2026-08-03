@@ -1,24 +1,99 @@
 @use 'theme';
 @use 'layout-mixins' as *;
+@use 'responsive-utilities' as *;
+@use 'animation-mixins' as *;
+@use 'utility-mixins' as *;
 
 .header {
+
   width: 100%;
   background-color: var(--color-tertiary);
   padding: 1rem;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  @include flex(space-between);
+  @include transition(all, $fast-duration);
+  @include flex(space-between, stretch, column);
+
+  &__top {
+    @include flex(space-between, center);
+  }
 
   &__logo {
-    color: var(--color-on-tertiary);
-    font-size: 0.8rem;
-    cursor: pointer;
+    @include flex();
+    gap: 1rem;
+  }
+
+  &__logoIcon {
+    min-height: 2.5rem;
+    min-width: 2.5rem;
   }
 
   &__nav {
-    &--list {
-      @include flex();
-      gap: 1rem;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    @include transition((grid-template-rows, opacity, visibility), $middle-duration);
+  }
+
+  &__navWrapper {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  &__visibleNav {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  &__navToggleButton {
+    @include screen('md') {
+      @include hidden();
+    }
+  }
+
+  // Padding instead of a gap on .header, so the spacing is clipped away with
+  // the rest of the nav while it is collapsed.
+  &__navList {
+    @include flex();
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-top: 1rem;
+    font-size: 0.825rem;
+  }
+
+  &__navListItem {
+    @include flex(center, center, column);
+    gap: 0.225rem;
+
+    @include screen('md') {
+      @include flex(center, center, row);
+    }
+
+  }
+
+  @include screen('md') {
+    @include flex(space-between, center);
+    gap: 1rem;
+
+    .header__nav {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .header__navList {
+      padding-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__nav {
+      transition-duration: 0ms;
     }
   }
 
