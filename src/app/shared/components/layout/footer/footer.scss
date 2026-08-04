@@ -10,6 +10,7 @@
   border-top-right-radius: 1rem;
   @include flex(center, center, column);
   gap: 0.3rem;
+  background-image: linear-gradient(to bottom, var(--color-surface-container-high), var(--color-surface-container));
 
   &__social {
     margin-top: 0.5rem;
