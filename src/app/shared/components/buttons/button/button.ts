@@ -11,10 +11,11 @@ import { ColorVariant } from '../../../types/style-variants';
 })
 export class Button {
 
-  // Inputs 
+  // Inputs
   type = input<string>('button');
   label = input<string>();
   color = input<ColorVariant>('primary');
+  disabled = input<boolean>(false);
 
 
 }

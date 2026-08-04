@@ -1,86 +1,44 @@
-@use 'animation-mixins' as *;
-@use 'colors' as *;
-@use 'responsive-utilities' as *;
+@use 'color-variants' as *;
+@use 'layout-mixins' as *;
+@use 'surface-mixins' as *;
+
+:host {
+  display: inline-flex;
+  max-width: 100%;
+}
 
 .button {
 
-  @include transition(all background-color border-color box-shadow, $fast-duration);
+  --face-cap: var(--color-primary);
+  --face-ink: var(--color-on-primary);
 
-  border-radius: 0.625rem;
-  border: 1px solid transparent;
-  box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
-  padding: 0.625rem 1rem;
+  @include flex(center, center);
+  @include pedal-face(0.5rem);
 
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0.6875rem 1.25rem;
+  gap: 0.5rem;
 
+  // Engraved-label typography: small, heavy and widely tracked.
   font: inherit;
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-decoration: none;
 
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
   appearance: none;
-  text-decoration: none;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-    transform: none;
-    box-shadow: none;
-  }
-
-  &:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 2px;
-  }
-
+  -webkit-tap-highlight-color: transparent;
 
   @each $color in $color-variants {
     &--#{$color} {
-      background: linear-gradient(to bottom,
-        color-mix(in srgb, var(--color-#{$color}) 94%, white),
-        var(--color-#{$color}));
-
-      color: var(--color-on-#{$color});
-      border-color: color-mix(in srgb,
-        var(--color-#{$color}) 80%,
-        black);
-
-      box-shadow:
-        0 1px 2px rgb(0 0 0 / 12%),
-        inset 0 1px 0 rgb(255 255 255 / 18%);
-
-      &:hover:not(:disabled) {
-        background: linear-gradient(to bottom,
-          color-mix(in srgb, var(--color-#{$color}) 88%, white),
-          color-mix(in srgb, var(--color-#{$color}) 96%, black));
-
-        border-color: color-mix(in srgb,
-          var(--color-#{$color}) 70%,
-          black);
-
-        box-shadow:
-          0 6px 16px rgb(0 0 0 / 18%),
-          inset 0 1px 0 rgb(255 255 255 / 22%);
-      }
-
-      &:active:not(:disabled) {
-        background: color-mix(in srgb,
-          var(--color-#{$color}) 92%,
-          black);
-
-        box-shadow:
-          inset 0 2px 4px rgb(0 0 0 / 18%),
-          0 1px 2px rgb(0 0 0 / 10%);
-      }
+      --face-cap: var(--color-#{$color});
+      --face-ink: var(--color-on-#{$color});
     }
   }
 

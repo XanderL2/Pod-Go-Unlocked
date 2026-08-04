@@ -1,50 +1,46 @@
 <header class="header">
   <div class="header__top">
-    <div class="header__logo">
-      <div class="header__logoIcon">
+    <div class="header__brand">
+      <span class="header__logoPlate">
         <app-icon [size]="'flexible'" [url]="identityIconsPath + '/pod-go-unlocked.svg'"></app-icon>
-      </div>
-      <div>
-        <h3>PodGo-Unlocked</h3>
-        <p>Bypassing DSP limits!</p>
-      </div>
+      </span>
+
+      <span class="header__brandText">
+        <h3 class="header__title">PodGo<span class="header__titleAccent">-Unlocked</span></h3>
+        <p class="header__claim">Bypassing DSP limits!</p>
+      </span>
     </div>
 
-    <div class="header__navToggleButton">
-      <app-button color="tertiary" (click)="toggleExpandedMenu()">
-        <app-icon [size]="'sm'" [url]="feedbackIconsPath + toggleIcon()"></app-icon>
-      </app-button>
-    </div>
+    <button
+      type="button"
+      class="header__navToggle"
+      aria-controls="header-nav"
+      aria-label="Toggle navigation menu"
+      [attr.aria-expanded]="menuExpanded()"
+      (click)="toggleExpandedMenu()"
+    >
+      <app-icon [size]="'sm'" [url]="feedbackIconsPath + toggleIcon()"></app-icon>
+    </button>
   </div>
 
-  <div class="header__nav" [class.header__visibleNav]="menuExpanded()">
+  <nav id="header-nav" class="header__nav" [class.header__nav--expanded]="menuExpanded()">
     <div class="header__navWrapper">
-      <ul class="header__navList">
-        <li>
-          <app-button color="tertiary">
-            <div class="header__navListItem">
-              <app-icon [size]="'sm'" [url]="feedbackIconsPath + '/unlock.svg'"></app-icon>
-              Unlock Block
-            </div>
-          </app-button>
-        </li>
-        <li>
-          <app-button color="tertiary">
-            <div class="header__navListItem">
-              <app-icon [size]="'sm'" [url]="feedbackIconsPath + '/templates.svg'"></app-icon>
-              Unlocked Templates
-            </div>
-          </app-button>
-        </li>
-        <li>
-          <app-button color="tertiary">
-            <div class="header__navListItem">
-              <app-icon [size]="'sm'" [url]="feedbackIconsPath + '/restore.svg'"></app-icon>
-              Restore Block
-            </div>
-          </app-button>
-        </li>
+      <ul class="header__tabs">
+        @for (item of navItems; track item.id) {
+          <li class="header__tabsItem">
+            <button
+              type="button"
+              class="header__tab"
+              [class.header__tab--active]="activeNavItem() === item.id"
+              [attr.aria-current]="activeNavItem() === item.id ? 'page' : null"
+              (click)="selectNavItem(item.id)"
+            >
+              <app-icon [size]="'sm'" [url]="feedbackIconsPath + item.icon"></app-icon>
+              <span class="header__tabLabel">{{ item.label }}</span>
+            </button>
+          </li>
+        }
       </ul>
     </div>
-  </div>
+  </nav>
 </header>

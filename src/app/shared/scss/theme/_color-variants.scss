@@ -1,0 +1,10 @@
+// Kept apart from _colors.scss so components can loop over the variants
+// without pulling the whole :root block into their own stylesheet.
+$color-variants:
+    primary,
+    secondary,
+    tertiary,
+    error,
+    info,
+    warning,
+    success;

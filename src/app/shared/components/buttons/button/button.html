@@ -1,6 +1,9 @@
-<button 
+<button
     class="button"
     [class]="`button--${color()}`"
+    [type]="type()"
+    [disabled]="disabled()"
+    [attr.aria-label]="label()"
 >
     <ng-content></ng-content>
 </button>
