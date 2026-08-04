@@ -1,8 +1,23 @@
-<div class="effectBlock" [class]="classStyleByType()">
-  <div class="effectBlock__icon" tabindex="0" role="button">
-    <app-icon [url]="iconByType()" [label]="name()" size="flexible" />
+@let name = blockData().name;
+@let enabled = blockData().enabled;
+
+<div
+  class="effectBlock"
+  [class]="classStyleByType()"
+  [class.effectBlock--bypassed]="!enabled"
+  (click)="tap.emit(blockData())"
+>
+  <div class="effectBlock__pedal">
+    <div class="effectBlock__icon" tabindex="0" role="button">
+      <app-icon [url]="iconByType()" [label]="name" size="flexible" />
+    </div>
+
+    <span
+      class="effectBlock__led"
+      [attr.aria-label]="enabled ? 'Enabled' : 'Bypassed'"
+      role="img"
+    ></span>
   </div>
 
-  <p class="effectBlock__name">{{ name() | blockNameFormatter: 'Empty Block' }}</p>
+  <p class="effectBlock__name">{{ name | blockNameFormatter: 'Empty Block' }}</p>
 </div>
-

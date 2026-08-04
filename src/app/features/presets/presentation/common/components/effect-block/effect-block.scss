@@ -10,17 +10,37 @@
 
     &__name {
         margin-top: 0.5rem;
+        text-align: center;
+        overflow-wrap: anywhere;
+        font-size: clamp(0.6rem, calc(var(--pedal-size, 6rem) * 0.14), 0.8rem);
         @include transition(transform color, $fast-duration)
     }
 
+    &__pedal {
+        position: relative;
+    }
+
+    &__led {
+        position: absolute;
+        top: 6%;
+        right: 6%;
+        width: max(0.4rem, calc(var(--pedal-size, 6rem) * 0.1));
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: var(--block-color, var(--color-outline-variant));
+        box-shadow: 0 0 0.45rem var(--block-color, transparent);
+        @include transition(background-color box-shadow, $fast-duration);
+    }
+
+    // Sized by whoever lays the blocks out (the pedal board shrinks them to fit)
     &__icon {
-        width: 6rem;
-        height: 6rem;
+        width: var(--pedal-size, 6rem);
+        height: var(--pedal-size, 6rem);
         border-radius: 50%;
         overflow: hidden;
         @include flex();
         @include transition(scale background-color border-color, $fast-duration);
-        padding: 1.225rem;
+        padding: calc(var(--pedal-size, 6rem) * 0.2);
 
         &:focus-visible {
             outline-offset: 2px;
@@ -37,6 +57,24 @@
             transform: translateY(-2px);
         }
     }
+
+    // Bypassed pedals stay in the chain, but visually muted
+    &--bypassed {
+        .effectBlock__icon {
+            border-style: dashed;
+            background-color: transparent;
+            opacity: 0.45;
+        }
+
+        .effectBlock__name {
+            opacity: 0.6;
+        }
+
+        .effectBlock__led {
+            background-color: var(--color-outline-variant);
+            box-shadow: none;
+        }
+    }
 }
 
 $categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 'filter', 'looper', 'wah', 'volume', 'fx_loop', 'empty', 'amp-cab-ir', 'unknown';
@@ -51,6 +89,8 @@ $categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 
       background-color: var(--color-on-#{$category});
       color: var(--color-on-#{$category}-container);
     }
+
+    --block-color: var(--color-#{$category});
 
     &:hover {
       .effectBlock__name {

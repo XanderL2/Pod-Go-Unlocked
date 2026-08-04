@@ -1,5 +1,8 @@
 <div class="pedalBoard">
   @for (block of blocks(); track $index) {
-    <app-effect-block [name]="block.name" [type]="block.type" />
+    <app-effect-block 
+      [blockData]="block" 
+      (tap)="printBlock($event)"
+    />
   }
 </div>

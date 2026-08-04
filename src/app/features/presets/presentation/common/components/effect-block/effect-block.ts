@@ -1,6 +1,6 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { Icon } from '../../../../../../shared/components/icons/icon/icon';
-import { BlockCategory } from '../../../../domain/entities/preset-entities';
+import { BlockCategory, Preset, PresetBlock } from '../../../../domain/entities/preset-entities';
 import { BLOCK_ICON_MAP } from '../../utils/preset-utils';
 import { BlockNameFormatterPipe } from '../../pipes/block-name-formatter-pipe';
 
@@ -13,10 +13,14 @@ import { BlockNameFormatterPipe } from '../../pipes/block-name-formatter-pipe';
 export class EffectBlock {
 
   // Inputs: 
-  type = input.required<BlockCategory>();
-  name = input.required<string>();
+  blockData = input.required<PresetBlock>();
 
+  // Outputs
+  tap = output<PresetBlock>();
+
+  
   // Properties
+  type = computed(() => this.blockData().type);
   iconByType = computed(() => BLOCK_ICON_MAP[this.type()]);
   classStyleByType = computed(() => {
     if (this.type() === BlockCategory.AMP_BLOCK || this.type() === BlockCategory.CAB_IR_BLOCK) {

@@ -7,6 +7,7 @@ export interface Preset {
 
 
 export interface PresetBlock {
+    id: number;
     name: string;
     position: number;
     enabled: boolean;
@@ -36,7 +37,7 @@ export enum BlockCategory {
     // Empty
     EMPTY_BLOCK = 'EMPTY',
 
-    // Unknow
+    // Unknown
     UNKNOWN = 'UNKNOWN'
 }
 

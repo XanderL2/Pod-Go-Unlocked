@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { PresetBlock } from '../../../../domain/entities/preset-entities';
 import { EffectBlock } from "../effect-block/effect-block";
+import { UNLOCK_PRESET_ROUTES } from '../../../../preset.routes';
 
 @Component({
   selector: 'app-pedal-board-setup',
@@ -14,4 +15,11 @@ export class PedalBoardSetup {
   // Inputs
   blocks = input.required<PresetBlock[]>();
 
+
+
+  printBlock(blockTapped: PresetBlock): void {
+
+    console.log(blockTapped);
+
+  }
 }

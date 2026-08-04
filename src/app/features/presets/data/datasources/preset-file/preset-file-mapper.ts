@@ -68,22 +68,23 @@ export class PresetFileMapper {
     const keys = Object.keys(toneObj) as (keyof ToneDsp0)[];
     const allowedKeys = keys.filter((key) => key.startsWith('block'));
 
-    allowedKeys.forEach((key) => {
+    allowedKeys.forEach((key, index) => {
       const toneItem = toneObj[key] as unknown as Block; 
       const position = parseInt(key.replace(/\D/g, ''), 10);
 
-      const preset = this.mapBlockToPresetBlock(toneItem, position);
+      const preset = this.mapBlockToPresetBlock(toneItem, position, index + 1);
       presetList.push(preset);
     });
 
     return presetList;
   }
 
-  private static mapBlockToPresetBlock(block: Block, position: number): PresetBlock {
+  private static mapBlockToPresetBlock(block: Block, position: number, id: number): PresetBlock {
 
     const name = block['@model'] || block['@label'] || '';
 
     return {
+      id,
       name,
       enabled: block['@enabled'] || false,
       position: position,
