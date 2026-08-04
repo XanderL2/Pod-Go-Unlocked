@@ -2,112 +2,329 @@
 @use 'animation-mixins' as *;
 @use 'colors' as *;
 
+// Springy curve so the pedal settles instead of snapping
+$pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
+
+:host {
+    display: block;
+
+    // Local alias: the pedal board still sizes the blocks from the outside
+    --_size: var(--pedal-size, 6rem);
+
+    // Palette fallbacks. Every .effectBlock__<type> class below overrides them,
+    // so the rest of the sheet never mentions a category again.
+    --block-color: var(--color-outline);
+    --block-face: var(--color-surface-container-highest);
+    --block-rim: var(--color-outline-variant);
+    --block-glyph: var(--color-on-surface);
+}
 
 .effectBlock {
     cursor: pointer;
-    font-size: 0.8rem;
+    color: var(--block-glyph);
+    gap: calc(var(--_size) * 0.09);
+    padding-block: 0.25rem;
+    -webkit-tap-highlight-color: transparent;
     @include flex(center, center, column);
 
-    &__name {
-        margin-top: 0.5rem;
-        text-align: center;
-        overflow-wrap: anywhere;
-        font-size: clamp(0.6rem, calc(var(--pedal-size, 6rem) * 0.14), 0.8rem);
-        @include transition(transform color, $fast-duration)
-    }
-
+    // Enclosure + LED move as one piece, so the lift is applied here
     &__pedal {
         position: relative;
+        isolation: isolate;
+        @include transition(transform, $fast-duration, $pedal-curve);
+    }
+
+    // The enclosure: sized by whoever lays the blocks out (the pedal board
+    // shrinks them to fit), so every depth cue scales with --_size.
+    &__icon {
+        position: relative;
+        width: var(--_size);
+        height: var(--_size);
+        padding: calc(var(--_size) * 0.21);
+        border-radius: 50%;
+        overflow: hidden;
+        border: max(1.5px, calc(var(--_size) * 0.022)) solid var(--block-rim);
+        background:
+            radial-gradient(
+                circle at 50% 16%,
+                color-mix(in srgb, var(--block-rim) 55%, transparent),
+                transparent 65%
+            ),
+            linear-gradient(
+                180deg,
+                color-mix(in srgb, white 7%, var(--block-face)),
+                color-mix(in srgb, black 20%, var(--block-face))
+            );
+        box-shadow:
+            inset 0 calc(var(--_size) * 0.015) 0 color-mix(in srgb, white 16%, transparent),
+            inset 0 calc(var(--_size) * -0.07) calc(var(--_size) * 0.16)
+                color-mix(in srgb, black 40%, transparent),
+            0 calc(var(--_size) * 0.05) calc(var(--_size) * 0.13) calc(var(--_size) * -0.05)
+                color-mix(in srgb, black 70%, transparent);
+        @include flex();
+        @include transition(
+            (transform, box-shadow, border-color, opacity, filter),
+            $fast-duration,
+            $pedal-curve
+        );
+
+        // Color wash that lights the enclosure up on hover (under the glyph)
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                circle at 50% 12%,
+                color-mix(in srgb, var(--block-color) 38%, transparent),
+                color-mix(in srgb, var(--block-rim) 60%, transparent) 72%
+            );
+            opacity: 0;
+            pointer-events: none;
+            @include transition(opacity, $middle-duration, $pedal-curve);
+        }
+
+        // Specular highlight, like light landing on a metal enclosure
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            border-radius: inherit;
+            background: linear-gradient(
+                202deg,
+                color-mix(in srgb, white 20%, transparent) 0%,
+                transparent 44%
+            );
+            opacity: 0.7;
+            pointer-events: none;
+            @include transition(opacity, $fast-duration);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--block-color);
+            outline-offset: 3px;
+        }
     }
 
     &__led {
         position: absolute;
-        top: 6%;
-        right: 6%;
-        width: max(0.4rem, calc(var(--pedal-size, 6rem) * 0.1));
+        top: calc(var(--_size) * 0.055);
+        right: calc(var(--_size) * 0.055);
+        z-index: 3;
+        width: max(0.35rem, calc(var(--_size) * 0.105));
         aspect-ratio: 1;
         border-radius: 50%;
-        background-color: var(--block-color, var(--color-outline-variant));
-        box-shadow: 0 0 0.45rem var(--block-color, transparent);
-        @include transition(background-color box-shadow, $fast-duration);
+        background: radial-gradient(
+            circle at 34% 28%,
+            color-mix(in srgb, white 80%, var(--block-color)) 0%,
+            var(--block-color) 52%,
+            color-mix(in srgb, black 35%, var(--block-color)) 100%
+        );
+        box-shadow:
+            0 0 0 1px color-mix(in srgb, black 55%, transparent),
+            0 0 calc(var(--_size) * 0.07) color-mix(in srgb, var(--block-color) 85%, transparent),
+            0 0 calc(var(--_size) * 0.18) color-mix(in srgb, var(--block-color) 45%, transparent);
+        animation: effectBlockLedBreath 3.2s ease-in-out infinite;
+        @include transition((box-shadow, opacity), $fast-duration);
     }
 
-    // Sized by whoever lays the blocks out (the pedal board shrinks them to fit)
-    &__icon {
-        width: var(--pedal-size, 6rem);
-        height: var(--pedal-size, 6rem);
-        border-radius: 50%;
+    &__name {
+        max-width: calc(var(--_size) * 1.25);
+        text-align: center;
+        font-size: clamp(0.6rem, calc(var(--_size) * 0.145), 0.8rem);
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+        text-wrap: balance;
+        color: color-mix(in srgb, var(--color-on-surface) 80%, transparent);
+
+        // Long block names get two lines, then an ellipsis (title has the rest)
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
         overflow: hidden;
-        @include flex();
-        @include transition(scale background-color border-color, $fast-duration);
-        padding: calc(var(--pedal-size, 6rem) * 0.2);
-
-        &:focus-visible {
-            outline-offset: 2px;
-        }
+        @include transition((color, transform), $fast-duration, $pedal-curve);
     }
-
 
     &:hover {
+        .effectBlock__pedal {
+            transform: translateY(calc(var(--_size) * -0.045));
+        }
+
         .effectBlock__icon {
-            scale: 1.05;
+            border-color: color-mix(in srgb, var(--block-color) 75%, var(--block-rim));
+            box-shadow:
+                inset 0 calc(var(--_size) * 0.015) 0 color-mix(in srgb, white 22%, transparent),
+                inset 0 calc(var(--_size) * -0.07) calc(var(--_size) * 0.16)
+                    color-mix(in srgb, black 35%, transparent),
+                0 0 0 calc(var(--_size) * 0.045)
+                    color-mix(in srgb, var(--block-color) 13%, transparent),
+                0 calc(var(--_size) * 0.1) calc(var(--_size) * 0.22) calc(var(--_size) * -0.06)
+                    color-mix(in srgb, black 75%, transparent),
+                0 calc(var(--_size) * 0.05) calc(var(--_size) * 0.3)
+                    color-mix(in srgb, var(--block-color) 22%, transparent);
+
+            &::before {
+                opacity: 1;
+            }
+
+            &::after {
+                opacity: 0.9;
+            }
         }
 
         .effectBlock__name {
+            color: var(--block-color);
             transform: translateY(-2px);
         }
     }
 
-    // Bypassed pedals stay in the chain, but visually muted
+    // Footswitch press: the enclosure sinks and the cast shadow collapses
+    &:active {
+        .effectBlock__pedal {
+            transform: translateY(calc(var(--_size) * 0.012)) scale(0.99);
+            transition-duration: 90ms;
+        }
+
+        .effectBlock__icon {
+            box-shadow:
+                inset 0 calc(var(--_size) * 0.03) calc(var(--_size) * 0.1)
+                    color-mix(in srgb, black 55%, transparent),
+                0 0 0 calc(var(--_size) * 0.03)
+                    color-mix(in srgb, var(--block-color) 16%, transparent);
+            transition-duration: 90ms;
+        }
+    }
+
+    // Bypassed pedals stay in the chain: flat and unlit, but they keep enough
+    // of their category color to stay identifiable without hovering them
     &--bypassed {
         .effectBlock__icon {
             border-style: dashed;
-            background-color: transparent;
-            opacity: 0.45;
+            border-color: color-mix(in srgb, var(--block-color) 40%, var(--block-rim));
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    color-mix(in srgb, var(--block-color) 14%, transparent),
+                    transparent 72%
+                ),
+                color-mix(in srgb, var(--block-face) 75%, transparent);
+            box-shadow: inset 0 0 calc(var(--_size) * 0.14)
+                color-mix(in srgb, black 30%, transparent);
+            filter: grayscale(0.2);
+            opacity: 0.78;
+
+            &::after {
+                opacity: 0.3;
+            }
         }
 
         .effectBlock__name {
-            opacity: 0.6;
+            font-weight: 500;
+            color: color-mix(in srgb, var(--block-color) 45%, var(--color-on-surface));
+            opacity: 0.7;
         }
 
+        // Unlit LED: tinted by the category, but with no glow at all
         .effectBlock__led {
-            background-color: var(--color-outline-variant);
-            box-shadow: none;
+            background: radial-gradient(
+                circle at 34% 28%,
+                color-mix(in srgb, white 20%, var(--block-color)),
+                color-mix(in srgb, var(--block-color) 45%, var(--color-outline-variant)) 70%
+            );
+            box-shadow:
+                inset 0 1px 2px color-mix(in srgb, black 60%, transparent),
+                0 0 0 1px color-mix(in srgb, black 45%, transparent);
+            opacity: 0.6;
+            animation: none;
+        }
+
+        &:hover .effectBlock__icon {
+            filter: none;
+            opacity: 0.95;
+            box-shadow:
+                inset 0 0 calc(var(--_size) * 0.14) color-mix(in srgb, black 25%, transparent),
+                0 0 0 calc(var(--_size) * 0.035)
+                    color-mix(in srgb, var(--block-color) 12%, transparent);
         }
     }
 }
 
-$categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 'filter', 'looper', 'wah', 'volume', 'fx_loop', 'empty', 'amp-cab-ir', 'unknown';
+@keyframes effectBlockLedBreath {
+    0%,
+    100% {
+        filter: brightness(1);
+    }
 
+    50% {
+        filter: brightness(1.3);
+    }
+}
+
+$categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 'filter', 'looper',
+    'wah', 'volume', 'fx_loop', 'empty', 'amp-cab-ir', 'unknown';
 
 @each $category in $categories {
-  .effectBlock__#{$category} {
-    color: var(--color-on-#{$category}-container);
+    .effectBlock__#{$category} {
+        --block-color: var(--color-#{$category});
+        --block-face: var(--color-on-#{$category});
+        --block-rim: var(--color-#{$category}-container);
+        --block-glyph: var(--color-on-#{$category}-container);
+    }
+}
 
+// An empty slot is a hole in the board, not a pedal: flat, dashed, no LED
+.effectBlock__empty {
     .effectBlock__icon {
-      border: 2px solid var(--color-#{$category}-container);
-      background-color: var(--color-on-#{$category});
-      color: var(--color-on-#{$category}-container);
+        border-style: dashed;
+        background: color-mix(in srgb, var(--block-face) 55%, transparent);
+        box-shadow: inset 0 0 calc(var(--_size) * 0.12) color-mix(in srgb, black 30%, transparent);
+        opacity: 0.7;
+
+        &::after {
+            opacity: 0.15;
+        }
     }
 
-    --block-color: var(--color-#{$category});
-
-    &:hover {
-      .effectBlock__name {
-        color: var(--color-#{$category});
-      }
-
-      .effectBlock__icon {
-        background-color: var(--color-#{$category}-container);
-        border-color: var(--color-on-#{$category}-container);
-      }
+    .effectBlock__led {
+        display: none;
     }
-  }
+
+    .effectBlock__name {
+        font-weight: 500;
+        font-style: italic;
+        opacity: 0.65;
+    }
+
+    &:hover .effectBlock__icon {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .effectBlock {
+        &__led {
+            animation: none;
+        }
+
+        &:hover .effectBlock__pedal,
+        &:hover .effectBlock__name,
+        &:active .effectBlock__pedal {
+            transform: none;
+        }
+    }
 }
 
 // Reset for pedal icons:
 :host ::ng-deep {
-  .icon {
-    display: inline-flex;
-  }
+    .icon {
+        position: relative;
+        z-index: 1;
+        display: inline-flex;
+        filter: drop-shadow(0 1px 1px color-mix(in srgb, black 45%, transparent));
+    }
 }

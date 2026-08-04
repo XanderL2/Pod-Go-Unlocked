@@ -19,5 +19,7 @@
     ></span>
   </div>
 
-  <p class="effectBlock__name">{{ name | blockNameFormatter: 'Empty Block' }}</p>
+  @let displayName = name | blockNameFormatter: 'Empty Block';
+
+  <p class="effectBlock__name" [title]="displayName">{{ displayName }}</p>
 </div>
