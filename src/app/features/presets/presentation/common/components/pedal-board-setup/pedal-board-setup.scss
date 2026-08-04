@@ -1,18 +1,167 @@
-@use 'layout-mixins' as *;
 @use 'responsive-utilities' as *;
 @use 'colors' as *;
 
-
 .pedalBoard {
-  @include flex(flex-start, center, column);
-  padding: 1.5rem;
-  border-radius: 10px;
-  gap: 2rem;
-  background-color: var(--color-surface-container-low);
+    position: relative;
+    isolation: isolate;
 
+    // -- Mobile first: one pedal per row, top to bottom, like reading the chain
 
- @include screen('md') {
-    @include flex(center, center, row);
-    flex-wrap: wrap;
-  }
+    // The board owns the pedal geometry; every effect block scales from here.
+    // One fixed size for every screen: 6rem reads well on a phone and still
+    // fits several columns on a desktop board.
+    --pedal-size: 6rem;
+
+    // The gaps are variables because the patch cable spans exactly half of one
+    // on each side of a block, so both stubs meet in the middle
+    --_gap-x: 1.25rem;
+    --_gap-y: 1.75rem;
+    --_cable: color-mix(in srgb, var(--color-outline) 55%, var(--color-surface-container-lowest));
+    --_cable-width: max(2px, calc(var(--pedal-size) * 0.035));
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    // stretch, not center: each block fills its whole track, so the pedal sits
+    // at the track's center and the cable stubs always meet across the gap
+    justify-items: stretch;
+    align-items: start;
+    gap: var(--_gap-y) var(--_gap-x);
+    padding: 1.25rem 1rem;
+    border-radius: 1rem;
+
+    // Glass panel: a dot grid reading through a translucent, blurred surface
+    background:
+        radial-gradient(
+                circle 1px at 1px 1px,
+                color-mix(in srgb, var(--color-on-surface) 9%, transparent) 1px,
+                transparent 0
+            )
+            0 0 / 22px 22px,
+        linear-gradient(
+            180deg,
+            color-mix(in srgb, var(--color-surface-container) 72%, transparent),
+            color-mix(in srgb, var(--color-surface-container-lowest) 88%, transparent)
+        );
+    backdrop-filter: blur(14px) saturate(130%);
+
+    // The panel has to sit *in* the page surface, not on top of it, so the
+    // shadow is tinted with the background instead of pure black and fades out
+    // through three ever softer layers. Outer shadows never paint inside the
+    // border box, so none of this can wash over the pedals.
+    box-shadow:
+        inset 0 0 4rem color-mix(in srgb, black 18%, transparent),
+        0 0.5rem 1rem -0.75rem color-mix(in srgb, var(--color-background) 45%, black),
+        0 1.5rem 2.5rem -1.5rem color-mix(in srgb, var(--color-background) 25%, black),
+        0 2.5rem 5rem -2rem color-mix(in srgb, var(--color-primary) 14%, transparent);
+
+    // 1px gradient hairline: brighter where the panel catches light, fading out
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(
+            145deg,
+            color-mix(in srgb, var(--color-on-surface) 22%, transparent),
+            color-mix(in srgb, var(--color-outline-variant) 30%, transparent) 45%,
+            color-mix(in srgb, var(--color-primary) 18%, transparent)
+        );
+
+        // Punch the middle out so only the 1px padding ring is painted
+        -webkit-mask:
+            linear-gradient(black 0 0) content-box,
+            linear-gradient(black 0 0);
+        mask:
+            linear-gradient(black 0 0) content-box,
+            linear-gradient(black 0 0);
+            
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    // -- Patch cable ------------------------------------------------------
+    // Every block grows a stub out of each side, half a gap long, so the stubs
+    // of two neighbors meet and read as one cable. No :nth-child arithmetic is
+    // involved, which is what keeps this working with a reflowing auto-fit grid:
+    // where a row breaks, the trailing stub just runs off toward the edge, the
+    // way a real board is patched from the end of one row to the start of the
+    // next. --pedal-center is published by the effect block itself.
+    > app-effect-block {
+        position: relative;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            // Behind the pedals but above the panel, so the cable disappears
+            // into each enclosure instead of crossing over it
+            z-index: -1;
+            left: 50%;
+            width: var(--_cable-width);
+            height: calc(var(--_gap-y) / 2 + 1px);
+            translate: -50% 0;
+            border-radius: 999px;
+            background: linear-gradient(
+                90deg,
+                color-mix(in srgb, white 22%, var(--_cable)),
+                var(--_cable) 60%
+            );
+            box-shadow: 0 1px 2px color-mix(in srgb, black 55%, transparent);
+        }
+
+        // Single column: the cable drops from block to block through the gap
+        &::before {
+            bottom: 100%;
+        }
+
+        &::after {
+            top: 100%;
+        }
+    }
+
+    // -- Tablet and up: the chain reflows into even columns. auto-fit keeps the
+    // block order and avoids the ragged last row that flex-wrap would leave.
+    @include screen('md') {
+        grid-template-columns: repeat(auto-fit, minmax(calc(var(--pedal-size) * 1.35), 1fr));
+        padding: 1.75rem;
+        border-radius: 1.25rem;
+
+        // The cable turns horizontal: each stub runs from the pedal's center
+        // out to half a gap past the block edge, passing behind the enclosure
+        > app-effect-block {
+            &::before,
+            &::after {
+                top: calc(var(--pedal-center) - var(--_cable-width) / 2);
+                bottom: auto;
+                width: calc(50% + var(--_gap-x) / 2 + 1px);
+                height: var(--_cable-width);
+                translate: none;
+                background: linear-gradient(
+                    180deg,
+                    color-mix(in srgb, white 22%, var(--_cable)),
+                    var(--_cable) 60%
+                );
+            }
+
+            &::before {
+                right: 50%;
+                left: auto;
+            }
+
+            &::after {
+                left: 50%;
+                right: auto;
+            }
+        }
+    }
+
+    @include screen('lg') {
+        --_gap-x: 2rem;
+        --_gap-y: 2.5rem;
+
+        padding: 2.25rem;
+        border-radius: 1.75rem;
+    }
 }

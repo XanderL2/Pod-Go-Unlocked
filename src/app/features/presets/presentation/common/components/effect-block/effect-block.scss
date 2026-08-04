@@ -10,6 +10,11 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
 
     // Local alias: the pedal board still sizes the blocks from the outside
     --_size: var(--pedal-size, 6rem);
+    --_pad: 0.25rem;
+
+    // Published for whoever lays the blocks out: distance from the top of the
+    // block down to the center of the pedal, so a cable can line up with it
+    --pedal-center: calc(var(--_pad) + var(--_size) / 2);
 
     // Palette fallbacks. Every .effectBlock__<type> class below overrides them,
     // so the rest of the sheet never mentions a category again.
@@ -23,7 +28,7 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
     cursor: pointer;
     color: var(--block-glyph);
     gap: calc(var(--_size) * 0.09);
-    padding-block: 0.25rem;
+    padding-block: var(--_pad);
     -webkit-tap-highlight-color: transparent;
     @include flex(center, center, column);
 
