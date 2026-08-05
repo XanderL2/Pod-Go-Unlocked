@@ -3,7 +3,6 @@ import { PresetEditorState } from './services/preset-editor-state';
 import { PedalBoardSetup } from '../common/components/pedal-board-setup/pedal-board-setup';
 import { Button } from "../../../../shared/components/buttons/button/button";
 import { BlockCategory, PresetBlock } from '../../domain/entities/preset-entities';
-import { TmplAstDeferredBlockLoading } from '@angular/compiler';
 
 @Component({
   selector: 'app-preset-editor-page',
@@ -22,15 +21,10 @@ export class PresetEditorPage {
   
 
 
-  handleBlockTapped(tappedBlock: PresetBlock) {
-
-    if(tappedBlock.type !== BlockCategory.EMPTY_BLOCK) {
-      this.toggleBlockEnabled(tappedBlock);
-    }
-
+  openEditorToolbar(tappedBlock: PresetBlock) {
   }
 
-  toggleBlockEnabled(block: PresetBlock) {
+  toggleEnabledBlock(block: PresetBlock) {
 
     if(block.enabled) {
       this.presetEditorState.disablePedal(block.id);

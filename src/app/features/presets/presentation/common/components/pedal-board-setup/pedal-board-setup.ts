@@ -19,12 +19,18 @@ export class PedalBoardSetup {
 
   // Outputs:
   blockTapped = output<PresetBlock>();
+  contextMenuBlock = output<PresetBlock>();
+
 
   // Properties:
   feedBackIconsPath = ASSET_PATHS.icons.feedback;
 
 
-  onBlockTapped(blockTapped: PresetBlock): void {
+  emitContextBlock(blockTapped: PresetBlock) {
+    this.contextMenuBlock.emit(blockTapped);
+  }
+
+  emitTappedBlock(blockTapped: PresetBlock): void {
     this.blockTapped.emit(blockTapped);
   }
 }

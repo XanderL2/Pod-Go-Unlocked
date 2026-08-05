@@ -5,7 +5,8 @@
   class="effectBlock"
   [class]="classStyleByType()"
   [class.effectBlock--bypassed]="!enabled"
-  (click)="tap.emit(blockData())"
+  (click)="emitTappedBlock()"
+  (contextmenu)="emitContextMenuBlock($event)"
 >
   <div class="effectBlock__pedal">
     <div class="effectBlock__icon" tabindex="0" role="button">

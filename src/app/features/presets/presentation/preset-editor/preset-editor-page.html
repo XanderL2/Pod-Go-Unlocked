@@ -21,7 +21,8 @@
   <section class="preset__pedalBoardSetup">
     <app-pedal-board-setup 
       [blocks]="activePreset()?.pedalSetup!" 
-      (blockTapped)="handleBlockTapped($event)"
+      (blockTapped)="openEditorToolbar($event)"
+      (contextMenuBlock)="toggleEnabledBlock($event)"
     />
   </section>
 </main>

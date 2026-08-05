@@ -12,7 +12,8 @@
   @for (block of blocks(); track $index) {
     <app-effect-block
       [blockData]="block"
-      (tap)="onBlockTapped($event)"
+      (tap)="emitTappedBlock($event)"
+      (contextAction)="emitContextBlock($event)"
     />
   }
 

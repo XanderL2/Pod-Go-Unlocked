@@ -17,8 +17,8 @@ export class EffectBlock {
 
   // Outputs
   tap = output<PresetBlock>();
+  contextAction = output<PresetBlock>();
 
-  
   // Properties
   type = computed(() => this.blockData().type);
   iconByType = computed(() => BLOCK_ICON_MAP[this.type()]);
@@ -29,4 +29,15 @@ export class EffectBlock {
 
     return `effectBlock__${this.type().toLowerCase()}`;
   });
+
+
+  emitTappedBlock() {
+    this.tap.emit(this.blockData());
+  }
+  
+  emitContextMenuBlock(e: Event) {
+    e.preventDefault();
+    this.contextAction.emit(this.blockData());
+  }
+
 }
