@@ -1,8 +1,28 @@
 <div class="pedalBoard">
+  <div class="pedalBoard__jack pedalBoard__jack--in">
+    <div class="pedalBoard__jackPlate">
+      <div class="pedalBoard__socket">
+        <app-icon [url]="feedBackIconsPath + '/guitar-in.svg'" size="flexible" label="Signal in" />
+      </div>
+    </div>
+
+    <p class="pedalBoard__jackLabel">In</p>
+  </div>
+
   @for (block of blocks(); track $index) {
-    <app-effect-block 
-      [blockData]="block" 
+    <app-effect-block
+      [blockData]="block"
       (tap)="onBlockTapped($event)"
     />
   }
+
+  <div class="pedalBoard__jack pedalBoard__jack--out">
+    <div class="pedalBoard__jackPlate">
+      <div class="pedalBoard__socket">
+        <app-icon [url]="feedBackIconsPath + '/guitar-out.svg'" size="flexible" label="Signal out" />
+      </div>
+    </div>
+
+    <p class="pedalBoard__jackLabel">Out</p>
+  </div>
 </div>

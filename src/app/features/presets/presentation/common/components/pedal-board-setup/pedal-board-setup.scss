@@ -1,5 +1,10 @@
 @use 'responsive-utilities' as *;
 @use 'colors' as *;
+@use 'layout-mixins' as *;
+@use 'animation-mixins' as *;
+
+// Same springy curve the pedals settle on, so jacks and blocks feel like one board
+$pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
 
 .pedalBoard {
     position: relative;
@@ -10,7 +15,7 @@
     // The board owns the pedal geometry; every effect block scales from here.
     // One fixed size for every screen: 6rem reads well on a phone and still
     // fits several columns on a desktop board.
-    --pedal-size: 6rem;
+    --pedal-size: 5.525rem;
 
     // The gaps are variables because the patch cable spans exactly half of one
     // on each side of a block, so both stubs meet in the middle
@@ -87,8 +92,9 @@
     // involved, which is what keeps this working with a reflowing auto-fit grid:
     // where a row breaks, the trailing stub just runs off toward the edge, the
     // way a real board is patched from the end of one row to the start of the
-    // next. --pedal-center is published by the effect block itself.
-    > app-effect-block {
+    // next. --pedal-center is published by the effect block (and mirrored by the
+    // in/out jacks), so every link of the chain patches at the same height.
+    > :is(app-effect-block, #{&}__jack) {
         position: relative;
 
         &::before,
@@ -121,6 +127,13 @@
         }
     }
 
+    // The chain has to end somewhere: the guitar jack grows no stub before it
+    // and the amp jack none after it, so no cable runs off past the two ends
+    > #{&}__jack--in::before,
+    > #{&}__jack--out::after {
+        content: none;
+    }
+
     // -- Tablet and up: the chain reflows into even columns. auto-fit keeps the
     // block order and avoids the ragged last row that flex-wrap would leave.
     @include screen('md') {
@@ -130,7 +143,7 @@
 
         // The cable turns horizontal: each stub runs from the pedal's center
         // out to half a gap past the block edge, passing behind the enclosure
-        > app-effect-block {
+        > :is(app-effect-block, #{&}__jack) {
             &::before,
             &::after {
                 top: calc(var(--pedal-center) - var(--_cable-width) / 2);
@@ -164,4 +177,146 @@
         padding: 2.25rem;
         border-radius: 1.75rem;
     }
+
+    // -- In / out jacks ---------------------------------------------------
+    // The two ends of the chain: not pedals, but the sockets the board is
+    // patched into. They mirror the effect block's box model exactly — same
+    // padding, same track height, same label slot — so the cable lines up and
+    // the whole row shares one baseline.
+    &__jack {
+        --_pad: 0.25rem;
+        --_socket: calc(var(--pedal-size) * 0.66);
+        --_accent: var(--color-tertiary);
+
+        // Published for the cable, same contract the effect block publishes
+        --pedal-center: calc(var(--_pad) + var(--pedal-size) / 2);
+
+        gap: calc(var(--pedal-size) * 0.09);
+        padding-block: var(--_pad);
+        @include flex(center, center, column);
+
+        &--out {
+            --_accent: var(--color-primary);
+        }
+    }
+
+    // Holds the socket in a track as tall as a pedal, so a jack and an
+    // enclosure sit at exactly the same height however small the socket is
+    &__jackPlate {
+        height: var(--pedal-size);
+        @include flex();
+    }
+
+    // The socket itself: a machined ring around a recessed hole, lit by the
+    // same overhead light as the enclosures
+    &__socket {
+        position: relative;
+        isolation: isolate;
+        width: var(--_socket);
+        height: var(--_socket);
+        padding: calc(var(--_socket) * 0.27);
+        border-radius: 50%;
+        color: color-mix(in srgb, var(--_accent) 55%, var(--color-on-surface));
+        border: max(1.5px, calc(var(--_socket) * 0.028)) solid
+            color-mix(in srgb, var(--_accent) 26%, var(--color-outline-variant));
+
+        // Brushed-metal nut: a conic sweep of light and shade around the ring
+        background:
+            radial-gradient(
+                circle at 50% 14%,
+                color-mix(in srgb, white 12%, transparent),
+                transparent 62%
+            ),
+            conic-gradient(
+                from 200deg,
+                color-mix(in srgb, white 13%, var(--color-surface-container-high)),
+                var(--color-surface-container-high) 22%,
+                color-mix(in srgb, black 30%, var(--color-surface-container-high)) 50%,
+                var(--color-surface-container-high) 78%,
+                color-mix(in srgb, white 13%, var(--color-surface-container-high))
+            );
+        box-shadow:
+            inset 0 calc(var(--_socket) * 0.015) 0 color-mix(in srgb, white 18%, transparent),
+            inset 0 calc(var(--_socket) * -0.07) calc(var(--_socket) * 0.16)
+                color-mix(in srgb, black 42%, transparent),
+            0 calc(var(--_socket) * 0.05) calc(var(--_socket) * 0.14) calc(var(--_socket) * -0.05)
+                color-mix(in srgb, black 70%, transparent),
+            0 0 calc(var(--_socket) * 0.3) color-mix(in srgb, var(--_accent) 12%, transparent);
+        @include flex();
+        @include transition((box-shadow, border-color, transform), $fast-duration, $pedal-curve);
+
+        // The hole: a dark well the glyph sits inside of, tinted by the accent
+        &::before {
+            content: '';
+            position: absolute;
+            inset: calc(var(--_socket) * 0.1);
+            z-index: -1;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 50% 28%,
+                color-mix(in srgb, var(--_accent) 20%, var(--color-surface-container-lowest)),
+                color-mix(in srgb, black 55%, var(--color-surface-container-lowest)) 80%
+            );
+            box-shadow:
+                inset 0 0 calc(var(--_socket) * 0.14) color-mix(in srgb, black 65%, transparent),
+                0 0 0 1px color-mix(in srgb, black 45%, transparent);
+            animation: pedalBoardJackBreath 3.2s ease-in-out infinite;
+        }
+
+        // Same specular streak the enclosures catch, so both read as one material
+        &::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            border-radius: inherit;
+            background: linear-gradient(
+                202deg,
+                color-mix(in srgb, white 18%, transparent) 0%,
+                transparent 46%
+            );
+            opacity: 0.7;
+            pointer-events: none;
+        }
+    }
+
+    // Matches the effect block's caption slot: same size ramp, quieter weight,
+    // uppercased because it names a connector and not a pedal
+    &__jackLabel {
+        text-align: center;
+        font-size: clamp(0.55rem, calc(var(--pedal-size) * 0.13), 0.72rem);
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        line-height: 1.25;
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--_accent) 60%, var(--color-on-surface));
+        opacity: 0.75;
+    }
+}
+
+// The jacks are live: a slow swell in the socket, in step with the pedal LEDs
+@keyframes pedalBoardJackBreath {
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+
+    50% {
+        filter: brightness(1.35);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pedalBoard__socket::before {
+        animation: none;
+    }
+}
+
+// The glyph rides above the socket's hole and sheen, and casts the same tiny
+// shadow the pedal icons do
+:host ::ng-deep .pedalBoard__socket .icon {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    filter: drop-shadow(0 1px 1px color-mix(in srgb, black 45%, transparent));
 }
