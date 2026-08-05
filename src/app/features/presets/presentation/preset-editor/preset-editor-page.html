@@ -10,19 +10,44 @@
   </section>
 
   <section class="preset__buttons">
-    <app-button color="error">
-      Cancel 
-    </app-button>
-    <app-button color="tertiary">
-      Export
-    </app-button>
-  </section> 
+    <app-button color="error"> Cancel </app-button>
+    <app-button color="tertiary"> Export </app-button>
+  </section>
 
   <section class="preset__pedalBoardSetup">
-    <app-pedal-board-setup 
-      [blocks]="activePreset()?.pedalSetup!" 
+    <app-pedal-board-setup
+      [blocks]="activePreset()?.pedalSetup!"
       (blockTapped)="openEditorToolbar($event)"
       (contextMenuBlock)="toggleEnabledBlock($event)"
     />
   </section>
+
+  <!--
+    Tapping a pedal opens the toolbar. The sheet owns its own dismissal — drag
+    the grabber down, click the scrim or press Escape and [(isOpen)] writes the
+    signal back, so the page only ever has to open it.
+  -->
+  <app-bottom-sheet [(isOpen)]="isToolBarOpen" label="Block options">
+    @let block = tappedBlock();
+
+    @if (block) {
+      <div class="preset__blockOptions">
+        <header class="preset__blockOptionsHeader">
+          <h3>{{ block.name | blockNameFormatter: 'Empty block' }}</h3>
+          <p>{{ block.type }} · Position {{ block.position }}</p>
+        </header>
+
+        <div class="preset__blockOptionsActions">
+          <app-button
+            [color]="block.enabled ? 'error' : 'success'"
+            (click)="toggleEnabledBlock(block)"
+          >
+            {{ block.enabled ? 'Disable block' : 'Enable block' }}
+          </app-button>
+
+          <app-button color="secondary" (click)="closeEditorToolbar()"> Done </app-button>
+        </div>
+      </div>
+    }
+  </app-bottom-sheet>
 </main>

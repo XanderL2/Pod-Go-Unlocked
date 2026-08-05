@@ -1,0 +1,156 @@
+// Only the mixins: the theme's custom properties are already global, and
+// importing 'colors' would copy the whole :root palette into this bundle
+@use 'layout-mixins' as *;
+@use 'responsive-utilities' as *;
+@use 'animation-mixins' as *;
+
+// The sheet settles instead of stopping dead, same curve the pedals use
+$sheet-curve: cubic-bezier(0.22, 1, 0.36, 1);
+
+:host {
+    // The overlay is fixed to the viewport, so the host takes no space itself
+    display: contents;
+}
+
+.bottomSheet {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    // Pinned to the bottom edge, centered horizontally
+    @include flex(flex-end, center, column);
+
+    // The scrim dims the page and is the click-outside target: it sits behind
+    // the panel, so a click on the content can never reach it
+    &__scrim {
+        position: absolute;
+        inset: 0;
+        background: rgb(0 0 0 / 55%);
+    }
+
+    // -- Panel -------------------------------------------------------------
+    // Full width on a phone, 70% from a tablet on: rounded only on top, so it
+    // always reads as a drawer pulled up out of the bottom edge
+    &__panel {
+        position: relative;
+        width: 100%;
+        max-height: 85dvh;
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        border-radius: 1.5rem 1.5rem 0 0;
+        @include flex(flex-start, stretch, column);
+
+        // Lit along the top edge and falling into shadow, so the drawer reads
+        // as a solid surface lifted over the page
+        background: linear-gradient(
+            180deg,
+            var(--color-surface-container-high),
+            var(--color-surface-container) 45%
+        );
+        color: var(--color-on-surface);
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 14%),
+            0 -0.75rem 2rem rgb(0 0 0 / 45%);
+
+        // The finger drives this variable while dragging; at rest it is 0
+        transform: translateY(var(--_drag, 0px));
+        outline: none;
+        @include transition(transform, $middle-duration, $sheet-curve);
+
+        // Under the finger there is nothing to animate: the sheet tracks the
+        // pointer 1:1, and the transition returns on release to snap it home
+        &--dragging {
+            transition: none;
+        }
+
+        @include screen('md') {
+            width: 70%;
+        }
+    }
+
+    // -- Grabber -----------------------------------------------------------
+    // The whole strip is draggable, not just the pill, so the gesture is easy
+    // to hit with a thumb. touch-action keeps the browser from scrolling the
+    // page out from under a drag meant for the sheet.
+    &__grabZone {
+        padding-block: 0.85rem 0.6rem;
+        touch-action: none;
+        cursor: grab;
+        user-select: none;
+        @include flex();
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
+
+    &__grabber {
+        width: 2.5rem;
+        height: 0.25rem;
+        border-radius: 999px;
+        background: rgb(255 255 255 / 35%);
+        @include transition(background, $fast-duration);
+
+        .bottomSheet__grabZone:hover & {
+            background: rgb(255 255 255 / 60%);
+        }
+    }
+
+    // The projected content scrolls on its own once the panel hits its cap;
+    // overscroll-behavior keeps that scroll from chaining to the page behind
+    &__content {
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 0.25rem 1rem 0.5rem;
+
+        @include screen('md') {
+            padding-inline: 1.5rem;
+        }
+    }
+
+    // -- Enter / leave -----------------------------------------------------
+    // The wrapper fades and the panel slides over the same duration, so Angular
+    // removes the element exactly when the drawer has finished leaving
+    &--entering {
+        @include animation(bottomSheetFadeIn, $middle-duration, ease-out);
+
+        .bottomSheet__panel {
+            @include animation(bottomSheetSlideIn, $middle-duration, $sheet-curve);
+        }
+    }
+
+    &--leaving {
+        @include animation(bottomSheetFadeIn, $middle-duration, ease-in);
+        animation-direction: reverse;
+
+        .bottomSheet__panel {
+            @include animation(bottomSheetSlideIn, $middle-duration, ease-in);
+            animation-direction: reverse;
+        }
+    }
+}
+
+@keyframes bottomSheetFadeIn {
+    from {
+        opacity: 0;
+    }
+}
+
+// Reversed on the way out, which also makes the exit start from wherever the
+// drag left the panel instead of jumping back up first
+@keyframes bottomSheetSlideIn {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(var(--_drag, 0px));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bottomSheet__panel,
+    .bottomSheet--entering,
+    .bottomSheet--leaving {
+        transition-duration: 0ms;
+        animation-duration: 1ms;
+    }
+}

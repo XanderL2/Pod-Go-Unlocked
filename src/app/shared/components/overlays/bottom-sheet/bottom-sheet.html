@@ -1,0 +1,30 @@
+@if (isOpen()) {
+  <div class="bottomSheet" animate.enter="bottomSheet--entering" animate.leave="bottomSheet--leaving">
+    <div class="bottomSheet__scrim" (click)="close()"></div>
+
+    <section
+      #panel
+      class="bottomSheet__panel"
+      [class.bottomSheet__panel--dragging]="isDragging()"
+      [style.--_drag]="dragOffset()"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="label()"
+      tabindex="-1"
+    >
+      <div
+        class="bottomSheet__grabZone"
+        (pointerdown)="startDragging($event)"
+        (pointermove)="updateDragging($event)"
+        (pointerup)="finishDragging()"
+        (pointercancel)="finishDragging()"
+      >
+        <span class="bottomSheet__grabber"></span>
+      </div>
+
+      <div class="bottomSheet__content">
+        <ng-content />
+      </div>
+    </section>
+  </div>
+}
