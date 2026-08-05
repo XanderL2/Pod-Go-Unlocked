@@ -6,7 +6,7 @@
       #panel
       class="bottomSheet__panel"
       [class.bottomSheet__panel--dragging]="isDragging()"
-      [style.--_drag]="dragOffset()"
+      [style.--drag]="dragDistance() + 'px'"
       role="dialog"
       aria-modal="true"
       [attr.aria-label]="label()"

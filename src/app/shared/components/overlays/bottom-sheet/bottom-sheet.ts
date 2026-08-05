@@ -3,18 +3,15 @@ import {
   Component,
   DOCUMENT,
   ElementRef,
-  computed,
   effect,
   inject,
   input,
   model,
-  output,
   signal,
   viewChild,
 } from '@angular/core';
 
-// How far the sheet has to be dragged down for the release to close it instead
-// of letting it snap back
+// Drag the sheet down further than this and releasing closes it
 const DISMISS_DISTANCE = 96;
 
 @Component({
@@ -30,46 +27,34 @@ const DISMISS_DISTANCE = 96;
 export class BottomSheet {
 
   // Inputs
-  // Two-way: the host opens it with [(isOpen)] and the sheet closes itself
+  // Two-way: the host opens it, the sheet closes itself
   isOpen = model<boolean>(false);
   label = input<string>('Bottom sheet');
 
-  // Outputs
-  closed = output<void>();
-
-  // View
-  private panel = viewChild<ElementRef<HTMLElement>>('panel');
-
   // Properties
   isDragging = signal<boolean>(false);
-  // How far the finger has pulled the panel down, read by the styles as --_drag
-  dragOffset = computed(() => `${this.dragDistance()}px`);
+  dragDistance = signal<number>(0);
 
-  private dragDistance = signal<number>(0);
+  private panel = viewChild<ElementRef<HTMLElement>>('panel');
   private dragStartY = 0;
-  private readonly document = inject(DOCUMENT);
+  private document = inject(DOCUMENT);
 
   constructor() {
-    // While the sheet is up it owns the screen: the page behind it must not
-    // scroll, and focus moves into the panel so the keyboard follows the content
+    // An open sheet owns the screen: the page behind it stops scrolling and
+    // focus moves into the panel
     effect((onCleanup) => {
       if (!this.isOpen()) return;
 
       this.dragDistance.set(0);
       this.panel()?.nativeElement.focus();
+      this.document.body.style.overflow = 'hidden';
 
-      const body = this.document.body;
-      body.style.overflow = 'hidden';
-
-      onCleanup(() => (body.style.overflow = ''));
+      onCleanup(() => (this.document.body.style.overflow = ''));
     });
   }
 
   close(): void {
-    if (!this.isOpen()) return;
-
     this.isOpen.set(false);
-    this.closed.emit();
   }
 
   // -- Drag to dismiss ---------------------------------------------------
@@ -90,17 +75,15 @@ export class BottomSheet {
   }
 
   finishDragging(): void {
-    if (!this.isDragging()) return;
-
     this.isDragging.set(false);
 
-    // The distance is left in place when closing, so the exit animation starts
-    // where the finger let go instead of jumping back up first
-    if (this.dragDistance() >= DISMISS_DISTANCE) {
-      this.close();
+    // On close the distance stays put, so the exit slides on from where the
+    // finger let go instead of jumping back up first
+    if (this.dragDistance() < DISMISS_DISTANCE) {
+      this.dragDistance.set(0);
       return;
     }
 
-    this.dragDistance.set(0);
+    this.close();
   }
 }

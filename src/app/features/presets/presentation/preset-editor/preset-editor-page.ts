@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PresetEditorState } from './services/preset-editor-state';
 import { PedalBoardSetup } from '../common/components/pedal-board-setup/pedal-board-setup';
 import { Button } from "../../../../shared/components/buttons/button/button";
@@ -21,39 +21,24 @@ export class PresetEditorPage {
   // Properties
   activePreset = this.presetEditorState.activePreset;
   isToolBarOpen = signal<boolean>(false);
-
-  // Only the id is stored: the block itself is read back from the state, so the
-  // open toolbar always shows the current values instead of a stale copy
-  private tappedBlockId = signal<number | null>(null);
-  tappedBlock = computed(() => {
-    const blockId = this.tappedBlockId();
-    const blocks = this.activePreset()?.pedalSetup;
-
-    if (blockId === null || !blocks) {
-      return undefined;
-    }
-
-    return this.presetEditorState.getPresetBlockById(blockId, blocks);
-  });
+  tappedBlock = signal<PresetBlock | null>(null);
 
 
   openEditorToolbar(tappedBlock: PresetBlock) {
-    this.tappedBlockId.set(tappedBlock.id);
+    this.tappedBlock.set(tappedBlock);
     this.isToolBarOpen.set(true);
-  }
-
-  closeEditorToolbar() {
-    this.isToolBarOpen.set(false);
   }
 
   toggleEnabledBlock(block: PresetBlock) {
 
     if(block.enabled) {
       this.presetEditorState.disablePedal(block.id);
-      return;
+    } else {
+      this.presetEditorState.enableBlock(block.id);
     }
 
-    this.presetEditorState.enableBlock(block.id);
+    // The toolbar has done its job once the block is toggled
+    this.isToolBarOpen.set(false);
   }
 
 }
