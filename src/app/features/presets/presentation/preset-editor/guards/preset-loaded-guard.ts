@@ -7,7 +7,7 @@ export const presetLoadedGuard: CanActivateFn = (route, state) => {
   const presetEditorState = inject(PresetEditorState);
   const router = inject(Router);
 
-  if(!presetEditorState.editorPreset()) {
+  if(!presetEditorState.activePreset()) {
     router.navigate(['/']);
     return false;
   }

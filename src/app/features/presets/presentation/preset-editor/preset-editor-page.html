@@ -9,7 +9,19 @@
     <p>Tempo: {{ tempo }}</p>
   </section>
 
+  <section class="preset__buttons">
+    <app-button color="error">
+      Cancel 
+    </app-button>
+    <app-button color="tertiary">
+      Export
+    </app-button>
+  </section> 
+
   <section class="preset__pedalBoardSetup">
-    <app-pedal-board-setup [blocks]="activePreset()?.pedalSetup!" />
+    <app-pedal-board-setup 
+      [blocks]="activePreset()?.pedalSetup!" 
+      (blockTapped)="handleBlockTapped($event)"
+    />
   </section>
 </main>

@@ -2,7 +2,7 @@
   @for (block of blocks(); track $index) {
     <app-effect-block 
       [blockData]="block" 
-      (tap)="printBlock($event)"
+      (tap)="onBlockTapped($event)"
     />
   }
 </div>

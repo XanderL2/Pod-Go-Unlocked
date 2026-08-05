@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { PresetBlock } from '../../../../domain/entities/preset-entities';
 import { EffectBlock } from "../effect-block/effect-block";
 import { UNLOCK_PRESET_ROUTES } from '../../../../preset.routes';
@@ -15,11 +15,12 @@ export class PedalBoardSetup {
   // Inputs
   blocks = input.required<PresetBlock[]>();
 
+  // Outputs:
+  blockTapped = output<PresetBlock>();
 
 
-  printBlock(blockTapped: PresetBlock): void {
 
-    console.log(blockTapped);
-
+  onBlockTapped(blockTapped: PresetBlock): void {
+    this.blockTapped.emit(blockTapped);
   }
 }
