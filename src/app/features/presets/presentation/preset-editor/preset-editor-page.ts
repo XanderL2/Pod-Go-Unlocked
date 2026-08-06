@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PresetEditorState } from './services/preset-editor-state';
-import { PedalBoardSetup } from '../common/components/pedal-board-setup/pedal-board-setup';
 import { Button } from "../../../../shared/components/buttons/button/button";
 import { PresetBlock } from '../../domain/entities/preset-entities';
 import { BottomSheet } from "../../../../shared/components/overlays/bottom-sheet/bottom-sheet";
 import { BlockNameFormatterPipe } from '../common/pipes/block-name-formatter-pipe';
+import { PedalBoardSetup } from './components/pedal-board-setup/pedal-board-setup';
 
 @Component({
   selector: 'app-preset-editor-page',
@@ -32,13 +32,11 @@ export class PresetEditorPage {
   toggleEnabledBlock(block: PresetBlock) {
 
     if(block.enabled) {
-      this.presetEditorState.disablePedal(block.id);
-    } else {
-      this.presetEditorState.enableBlock(block.id);
-    }
+      this.presetEditorState.disableBlock(block.id); 
+      return;
+    } 
 
-    // The toolbar has done its job once the block is toggled
-    this.isToolBarOpen.set(false);
+    this.presetEditorState.enableBlock(block.id);
   }
 
 }

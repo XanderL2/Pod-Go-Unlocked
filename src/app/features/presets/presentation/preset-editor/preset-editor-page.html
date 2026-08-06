@@ -22,11 +22,7 @@
     />
   </section>
 
-  <!--
-    Tapping a pedal opens the toolbar. Dismissing it is the sheet's own job:
-    drag the grabber down, click outside or press Escape and [(isOpen)] writes
-    the signal back, so the page only ever has to open it.
-  -->
+
   <app-bottom-sheet [(isOpen)]="isToolBarOpen" label="Block options">
     @let block = tappedBlock();
 
@@ -36,11 +32,29 @@
         <p>{{ block.type }} · Position {{ block.position }}</p>
 
         <app-button
-          [color]="block.enabled ? 'error' : 'success'"
-          (click)="toggleEnabledBlock(block)"
+          [color]="'primary'"
         >
-          {{ block.enabled ? 'Disable block' : 'Enable block' }}
+        Random
         </app-button>
+        <app-button
+          [color]="'secondary'"
+        >
+        Random
+        </app-button>
+        <app-button
+          [color]="'tertiary'"
+        >
+        Random
+        </app-button>
+        <app-button
+          [color]="'success'"
+        >
+        Random
+        </app-button>
+
+
+
+
       </div>
     }
   </app-bottom-sheet>

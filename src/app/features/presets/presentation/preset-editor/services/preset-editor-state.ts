@@ -1,8 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { PodGoPresetModel } from '../../../data/models/preset-models';
 import { LoadPresetFromJsonStringUseCase } from '../../../domain/use-cases/load-preset-from-json-string-use-case';
 import { Preset, PresetBlock } from '../../../domain/entities/preset-entities';
-import { PedalBoardSetup } from '../../common/components/pedal-board-setup/pedal-board-setup';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +11,7 @@ export class PresetEditorState {
 
   activePreset = computed(() => this._activePreset());
 
-  disablePedal(blockId: number): void {
+  disableBlock(blockId: number): void {
     this.verifyActivePresetIntegrity();
     const updatedPedalSetup = this.updatePedalBoardBlock(
       blockId, 

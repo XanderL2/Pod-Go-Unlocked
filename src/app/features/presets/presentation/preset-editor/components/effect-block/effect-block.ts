@@ -1,8 +1,8 @@
 import { Component, computed, input, output } from '@angular/core';
 import { Icon } from '../../../../../../shared/components/icons/icon/icon';
-import { BlockCategory, Preset, PresetBlock } from '../../../../domain/entities/preset-entities';
-import { BLOCK_ICON_MAP } from '../../utils/preset-utils';
-import { BlockNameFormatterPipe } from '../../pipes/block-name-formatter-pipe';
+import { BlockCategory, PresetBlock } from '../../../../domain/entities/preset-entities';
+import { BlockNameFormatterPipe } from '../../../common/pipes/block-name-formatter-pipe';
+import { BLOCK_ICON_MAP } from '../../../common/utils/preset-utils';
 
 @Component({
   selector: 'app-effect-block',

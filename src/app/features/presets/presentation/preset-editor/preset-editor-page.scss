@@ -22,21 +22,13 @@
   }
 
 
-  &__effectsSetup {
 
-  }
-
-  // Content projected into the bottom sheet: the sheet gives the panel, this
-  // gives the rhythm
   &__blockOptions {
     padding-block: 0.5rem 1rem;
-    @include flex(flex-start, stretch, column);
-    gap: 1rem;
+    @include flex(flex-start, flex-start, column);
 
-    p {
-      font-size: 0.85rem;
-      color: var(--color-on-surface-variant);
-    }
+
+
   }
 
 }
