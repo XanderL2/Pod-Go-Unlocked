@@ -8,3 +8,6 @@ $color-variants:
     info,
     warning,
     success;
+
+$pedal-categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 'filter', 'looper',
+    'wah', 'volume', 'fx_loop', 'empty', 'amp-cab-ir', 'unknown';

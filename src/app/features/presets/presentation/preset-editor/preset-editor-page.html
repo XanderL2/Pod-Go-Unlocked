@@ -27,35 +27,10 @@
     @let block = tappedBlock();
 
     @if (block) {
-      <div class="preset__blockOptions">
-        <h3>{{ block.name | blockNameFormatter: 'Empty block' }}</h3>
-        <p>{{ block.type }} · Position {{ block.position }}</p>
-
-        <app-button
-          [color]="'primary'"
-        >
-        Random
-        </app-button>
-        <app-button
-          [color]="'secondary'"
-        >
-        Random
-        </app-button>
-        <app-button
-          [color]="'tertiary'"
-        >
-        Random
-        </app-button>
-        <app-button
-          [color]="'success'"
-        >
-        Random
-        </app-button>
-
-
-
-
-      </div>
+      <app-edit-preset-panel 
+        [block]="block"
+        
+      />
     }
   </app-bottom-sheet>
 </main>

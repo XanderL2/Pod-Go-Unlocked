@@ -1,0 +1,21 @@
+@use 'layout-mixins' as *;
+
+.editPanel {
+
+  @include flex(flex-start, flex-start, column);
+  gap: 2rem;
+
+  &__titles {
+    @include flex(flex-start, flex-start, column);
+    gap: 0.225rem
+  }
+
+  &__controls {
+    @include flex(center, center, row);
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+  }
+}
+

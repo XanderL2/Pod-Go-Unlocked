@@ -270,10 +270,9 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
     }
 }
 
-$categories: 'dist', 'dynamic', 'eq', 'modulation', 'delay', 'reverb', 'pitch', 'filter', 'looper',
-    'wah', 'volume', 'fx_loop', 'empty', 'amp-cab-ir', 'unknown';
 
-@each $category in $categories {
+
+@each $category in $pedal-categories {
     .effectBlock__#{$category} {
         --block-color: var(--color-#{$category});
         --block-face: var(--color-on-#{$category});

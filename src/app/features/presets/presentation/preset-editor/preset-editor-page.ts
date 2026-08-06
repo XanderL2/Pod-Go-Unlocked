@@ -5,10 +5,11 @@ import { PresetBlock } from '../../domain/entities/preset-entities';
 import { BottomSheet } from "../../../../shared/components/overlays/bottom-sheet/bottom-sheet";
 import { BlockNameFormatterPipe } from '../common/pipes/block-name-formatter-pipe';
 import { PedalBoardSetup } from './components/pedal-board-setup/pedal-board-setup';
+import { EditPresetPanel } from "./components/edit-preset-panel/edit-preset-panel";
 
 @Component({
   selector: 'app-preset-editor-page',
-  imports: [PedalBoardSetup, Button, BottomSheet, BlockNameFormatterPipe],
+  imports: [PedalBoardSetup, Button, BottomSheet, EditPresetPanel],
   templateUrl: './preset-editor-page.html',
   styleUrl: './preset-editor-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

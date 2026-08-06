@@ -4,6 +4,7 @@ import { EffectBlock } from "../effect-block/effect-block";
 import { UNLOCK_PRESET_ROUTES } from '../../../../preset.routes';
 import { Icon } from "../../../../../../shared/components/icons/icon/icon";
 import { ASSET_PATHS } from '../../../../../../core/constants/assets-paths';
+import { BLOCK_ICON_MAP } from '../../../common/utils/preset-utils';
 
 @Component({
   selector: 'app-pedal-board-setup',

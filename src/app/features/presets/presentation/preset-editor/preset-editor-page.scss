@@ -21,15 +21,5 @@
     gap: 0.5rem;
   }
 
-
-
-  &__blockOptions {
-    padding-block: 0.5rem 1rem;
-    @include flex(flex-start, flex-start, column);
-
-
-
-  }
-
 }
 

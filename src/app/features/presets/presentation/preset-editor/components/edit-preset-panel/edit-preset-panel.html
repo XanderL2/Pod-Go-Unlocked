@@ -1,0 +1,59 @@
+<div class="editPanel">
+  <div class="editPanel__titles">
+    <h3>{{ block().name | blockNameFormatter: 'Empty block' }}</h3>
+    <p>{{ block().type }} · Position {{ block().position }}</p>
+  </div>
+
+  <div class="editPanel__controls">
+    @let notEnabled = !block().enabled;
+    @let enableBlockText = notEnabled ? 'Enabled' : 'Disabled';
+
+    <!-- ENABLED AND DISABLED BLOCKS -->
+    <app-edit-block-button
+      [title]="enableBlockText"
+      [subTitle]="`${enableBlockText} block`"
+      [style]="notEnabled ? 'success' : 'error'"
+      [icon]="
+        notEnabled ? `${feedBackIconsPath}/on-block.svg` : `${feedBackIconsPath}/off-block.svg`
+      "
+    ></app-edit-block-button>
+  
+    <!-- UNLOCK BLOCK -->
+    <app-edit-block-button
+      title="Unlock block"
+      subTitle="Unlock pedal block"
+      [style]="'secondary'"
+      [icon]="feedBackIconsPath + '/guitar-out.svg'"
+    ></app-edit-block-button>
+
+
+    <!-- REPLACES BLOCKS -->
+    <app-edit-block-button
+      title="Replace"
+      subTitle="With wah block"
+      [style]="BLOCK_CATEGORIES.WAH_BLOCK"
+      [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.WAH_BLOCK]"
+    ></app-edit-block-button>
+
+    <app-edit-block-button
+      title="Replace"
+      subTitle="With volume block"
+      [style]="BLOCK_CATEGORIES.VOLUME_BLOCK"
+      [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.VOLUME_BLOCK]"
+    ></app-edit-block-button>
+
+    <app-edit-block-button
+      title="Replace"
+      subTitle="With EQ Block"
+      [style]="BLOCK_CATEGORIES.EQ"
+      [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.EQ]"
+    ></app-edit-block-button>
+
+    <app-edit-block-button
+      title="Replace"
+      subTitle="With Fx Loop"
+      [style]="BLOCK_CATEGORIES.FX_LOOP"
+      [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.FX_LOOP]"
+    ></app-edit-block-button>
+  </div>
+</div>

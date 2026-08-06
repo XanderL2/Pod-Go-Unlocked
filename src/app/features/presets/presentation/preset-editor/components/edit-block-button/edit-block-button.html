@@ -1,0 +1,11 @@
+<button 
+  class="editBlockButton"
+  [class]="classByStyleInput()"
+  >
+  <div>
+    <h4 class="editBlockButton__title">{{ title() }}</h4>
+    <p class="editBlockButton__subTitle">{{ subTitle() }}</p>
+  </div>
+
+  <app-icon [url]="icon()" size="md" label="Signal out" />
+</button>
