@@ -10,10 +10,10 @@
   </section>
 
   <section class="preset__buttons">
-    <app-button color="error">
+    <app-button color="error" (click)="cancelEdition()">
       <app-icon [url]="`${feedBackIcons}/cancel.svg`"></app-icon> Cancel
     </app-button>
-    <app-button color="tertiary">
+    <app-button color="tertiary" (click)="exportPreset()">
       <app-icon [url]="`${feedBackIcons}/export.svg`"></app-icon> Export
     </app-button>
   </section>

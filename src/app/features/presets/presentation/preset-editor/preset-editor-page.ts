@@ -14,6 +14,7 @@ import {
 import { ToastLauncher } from '../../../../shared/components/feedback/toast/controller/toast-launcher';
 import { Icon } from "../../../../shared/components/icons/icon/icon";
 import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-preset-editor-page',
@@ -24,8 +25,9 @@ import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
 })
 export class PresetEditorPage {
   // Services:
-  private presetEditorState = inject(PresetEditorState);
-  private toastLauncher = inject(ToastLauncher);
+  private readonly presetEditorState = inject(PresetEditorState);
+  private readonly toastLauncher = inject(ToastLauncher);
+  private readonly location = inject(Location);
 
   // Properties
   activePreset = this.presetEditorState.activePreset;
@@ -100,5 +102,14 @@ export class PresetEditorPage {
     } catch (error) {
       this.toastLauncher.error('Oops! An error occurred.', error as string);
     }
+  }
+
+  cancelEdition(): void {
+    this.location.back();
+    this.presetEditorState.clearActivePreset();
+  }
+
+  exportPreset(): void {
+    // TODO: CREAR EXPORT DE PRESET
   }
 }
