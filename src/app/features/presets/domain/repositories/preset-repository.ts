@@ -1,9 +1,12 @@
-import { PodGoPresetModel } from "../../data/models/preset-models";
 import { Preset } from "../entities/preset-entities";
 
 export abstract class PresetRepository {
+
+    abstract getUnlockedTemplates(): Preset; 
+    abstract exportPreset(preset: Preset): string;
     abstract loadPresetFromRawString(jsonString: string): Preset;
-    abstract unlockPresetBlock(preset: PodGoPresetModel): PodGoPresetModel; 
-    abstract restorePresetBlock(preset: PodGoPresetModel): PodGoPresetModel; 
-    abstract getUnlockedTemplates(preset: PodGoPresetModel): PodGoPresetModel; 
+    // abstract unlockPresetBlock(preset: Preset, block: PresetBlock): Preset; 
+    // abstract restorePresetBlock(preset: Preset, block: PresetBlock): Preset; 
+    // abstract enableBlock( block: PresetBlock): 
+
 }

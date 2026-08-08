@@ -16,14 +16,16 @@
       [icon]="
         notEnabled ? `${feedBackIconsPath}/on-block.svg` : `${feedBackIconsPath}/off-block.svg`
       "
+      (click)="selectOption.emit(OPTIONS.ENABLED_DISABLED_BLOCK)"
     ></app-edit-block-button>
   
-    <!-- UNLOCK BLOCK -->
+    <!-- CLEAR / UNLOCK BLOCK -->
     <app-edit-block-button
-      title="Unlock block"
-      subTitle="Unlock pedal block"
+      title="Clear block"
+      subTitle="Remove any block from your preset"
       [style]="'secondary'"
-      [icon]="feedBackIconsPath + '/guitar-out.svg'"
+      [icon]="feedBackIconsPath + '/remove-block.svg'"
+      (click)="selectOption.emit(OPTIONS.CLEAR_BLOCK)"
     ></app-edit-block-button>
 
 

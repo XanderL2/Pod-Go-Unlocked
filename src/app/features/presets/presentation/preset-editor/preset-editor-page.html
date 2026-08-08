@@ -29,7 +29,7 @@
     @if (block) {
       <app-edit-preset-panel 
         [block]="block"
-        
+        (selectOption)="onSelectOptionFromEditorPanel($event)" 
       />
     }
   </app-bottom-sheet>

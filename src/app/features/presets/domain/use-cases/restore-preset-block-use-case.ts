@@ -9,4 +9,13 @@ export class RestorePresetBlockUseCase {
 
   private _repositoryImpl: PresetRepository = inject(PresetRepositoryImpl);
 
+
+  enableBlock() {
+
+  }
+
+  disableBlock() {
+
+  }
+
 }

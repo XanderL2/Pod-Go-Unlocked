@@ -9,5 +9,4 @@ export class GetUnlockedTemplatesUseCase {
 
   private _repositoryImpl: PresetRepository = inject(PresetRepositoryImpl);
 
-
 }
