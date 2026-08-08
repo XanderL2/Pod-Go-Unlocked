@@ -26,6 +26,11 @@ export class PresetEditorPage {
   activePreset = this.presetEditorState.activePreset;
   isToolBarOpen = signal<boolean>(false);
   tappedBlock = signal<PresetBlock | null>(null);
+  editorPanelActions: Map<EDIT_PRESET_PANEL_ACTIONS, Function> = new Map([
+    [EDIT_PRESET_PANEL_ACTIONS.ENABLED_DISABLED_BLOCK, () => this.toggleEnabledBlock(this.tappedBlock()!)],
+    [EDIT_PRESET_PANEL_ACTIONS.ENABLED_DISABLED_BLOCK, () => this.toggleEnabledBlock(this.tappedBlock()!)],
+    [EDIT_PRESET_PANEL_ACTIONS.CLEAR_BLOCK, () => this.presetEditorState.clearBlock(this.tappedBlock()?.id!)],
+  ]);
 
   // Public methods
   openEditorToolbar(tappedBlock: PresetBlock) {
@@ -34,16 +39,17 @@ export class PresetEditorPage {
   }
 
   onSelectOptionFromEditorPanel(action: EDIT_PRESET_PANEL_ACTIONS): void {
-    const tappedBlock = this.tappedBlock();
 
-    switch (action) {
-      case EDIT_PRESET_PANEL_ACTIONS.ENABLED_DISABLED_BLOCK:
-        this.toggleEnabledBlock(tappedBlock!);
-        break;
 
-      case EDIT_PRESET_PANEL_ACTIONS.CLEAR_BLOCK:
-        this.handleClearBlock(tappedBlock!);
-        break;
+    try {
+      
+      const actionHandler = this.editorPanelActions.get(action);
+      if(!actionHandler) throw new Error(`Handler not implemented for this action ${action}`);
+
+      actionHandler();
+
+    } catch (error) {
+      this.toastLauncher.error("Oops! An error occurred.", error as string);
     }
 
     this.isToolBarOpen.set(false);
@@ -56,15 +62,5 @@ export class PresetEditorPage {
     }
 
     this.presetEditorState.enableBlock(block.id);
-  }
-
-  // Private methods:
-  private handleClearBlock(tappedBlock: PresetBlock): void {
-    if (tappedBlock?.type === BlockCategory.EMPTY_BLOCK) {
-      this.toastLauncher.error('', 'This block has already been cleared.');
-      return;
-    }
-
-    this.presetEditorState.clearBlock(tappedBlock?.id!);
   }
 }
