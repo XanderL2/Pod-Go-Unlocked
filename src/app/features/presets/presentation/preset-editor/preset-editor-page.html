@@ -10,8 +10,12 @@
   </section>
 
   <section class="preset__buttons">
-    <app-button color="error"> Cancel </app-button>
-    <app-button color="tertiary"> Export </app-button>
+    <app-button color="error">
+      <app-icon [url]="`${feedBackIcons}/cancel.svg`"></app-icon> Cancel
+    </app-button>
+    <app-button color="tertiary">
+      <app-icon [url]="`${feedBackIcons}/export.svg`"></app-icon> Export
+    </app-button>
   </section>
 
   <section class="preset__pedalBoardSetup">
@@ -22,14 +26,13 @@
     />
   </section>
 
-
   <app-bottom-sheet [(isOpen)]="isToolBarOpen" label="Block options">
     @let block = tappedBlock();
 
     @if (block) {
-      <app-edit-preset-panel 
+      <app-edit-preset-panel
         [block]="block"
-        (selectOption)="onSelectOptionFromEditorPanel($event)" 
+        (selectOption)="onSelectOptionFromEditorPanel($event)"
       />
     }
   </app-bottom-sheet>

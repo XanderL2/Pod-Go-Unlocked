@@ -12,10 +12,12 @@ import {
   EditPresetPanel,
 } from './components/edit-preset-panel/edit-preset-panel';
 import { ToastLauncher } from '../../../../shared/components/feedback/toast/controller/toast-launcher';
+import { Icon } from "../../../../shared/components/icons/icon/icon";
+import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
 
 @Component({
   selector: 'app-preset-editor-page',
-  imports: [PedalBoardSetup, Button, BottomSheet, EditPresetPanel],
+  imports: [PedalBoardSetup, Button, BottomSheet, EditPresetPanel, Icon],
   templateUrl: './preset-editor-page.html',
   styleUrl: './preset-editor-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +29,7 @@ export class PresetEditorPage {
 
   // Properties
   activePreset = this.presetEditorState.activePreset;
+  feedBackIcons = ASSET_PATHS.icons.feedback;
   isToolBarOpen = signal<boolean>(false);
   tappedBlock = signal<PresetBlock | null>(null);
   EDIT_PRESET_PANEL_ACTIONS = EDIT_PRESET_PANEL_ACTIONS;
