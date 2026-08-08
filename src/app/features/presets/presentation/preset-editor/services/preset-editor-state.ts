@@ -1,8 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoadPresetFromJsonStringUseCase } from '../../../domain/use-cases/load-preset-from-json-string-use-case';
-import { BlockCategory, Preset, PresetBlock } from '../../../domain/entities/preset-entities';
+import { BlockCategory, Preset, PresetBlock, REPLACEABLE_BLOCKS } from '../../../domain/entities/preset-entities';
 import { EnableDisableBlockUseCase } from '../../../domain/use-cases/enable-disable-block-use-case';
 import { ClearPresetBlockUseCase } from '../../../domain/use-cases/clear-preset-block-use-case';
+import { ReplacePresetBlockUseCase } from '../../../domain/use-cases/replace-preset-block-use-case';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class PresetEditorState {
   private readonly _loadPresetFromJsonUseCase = inject(LoadPresetFromJsonStringUseCase);
   private readonly _enableDisableBlockUseCase = inject(EnableDisableBlockUseCase);
   private readonly _clearPresetBlockUseCase = inject(ClearPresetBlockUseCase);
+  private readonly _replaceBlockUseCase = inject(ReplacePresetBlockUseCase);
 
   // Properties
   private _activePreset = signal<Preset | null>(null);
@@ -48,6 +50,11 @@ export class PresetEditorState {
     this._activePreset.set(preset);
   }
 
+  replaceBlockBy(blockType: REPLACEABLE_BLOCKS, blockId: number): void {
+    this._activePreset.update(
+      (prevValuePreset) => this._replaceBlockUseCase.replaceBlock(blockId, blockType, prevValuePreset!)
+    );
+  }
 
   // Private methods: 
   private assertValidPreset(preset: Preset) {

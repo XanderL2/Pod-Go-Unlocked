@@ -35,6 +35,7 @@
       subTitle="With wah block"
       [style]="BLOCK_CATEGORIES.WAH_BLOCK"
       [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.WAH_BLOCK]"
+      (click)="selectOption.emit(OPTIONS.REPLACE_WITH_WAH)"
     ></app-edit-block-button>
 
     <app-edit-block-button
@@ -42,6 +43,7 @@
       subTitle="With volume block"
       [style]="BLOCK_CATEGORIES.VOLUME_BLOCK"
       [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.VOLUME_BLOCK]"
+      (click)="selectOption.emit(OPTIONS.REPLACE_WITH_VOLUME)"
     ></app-edit-block-button>
 
     <app-edit-block-button
@@ -49,6 +51,7 @@
       subTitle="With EQ Block"
       [style]="BLOCK_CATEGORIES.EQ"
       [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.EQ]"
+      (click)="selectOption.emit(OPTIONS.REPLACE_WITH_EQ)"
     ></app-edit-block-button>
 
     <app-edit-block-button
@@ -56,6 +59,7 @@
       subTitle="With Fx Loop"
       [style]="BLOCK_CATEGORIES.FX_LOOP"
       [icon]="BLOCK_ICON_MAP[BLOCK_CATEGORIES.FX_LOOP]"
+      (click)="selectOption.emit(OPTIONS.REPLACE_WITH_FX_LOOP)"
     ></app-edit-block-button>
   </div>
 </div>

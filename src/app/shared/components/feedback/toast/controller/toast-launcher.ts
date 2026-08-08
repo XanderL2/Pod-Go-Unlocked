@@ -26,7 +26,7 @@ export class ToastLauncher {
 
   private show(title: string, description: string, type: ToastType) {
 
-    console.log("Mostrando toast");
+    console.log("Showing toast!");
 
     this.toasts.update((toasts) => {
       toasts.enqueue({ title, description, type });
@@ -43,7 +43,7 @@ export class ToastLauncher {
         return toasts.clone();
       });
 
-      console.log("Limpiando toast");
+      console.log("Cleaning toast");
 
     }, this.TOAST_DURATION);
   }

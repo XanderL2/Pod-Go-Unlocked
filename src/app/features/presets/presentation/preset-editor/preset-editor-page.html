@@ -18,7 +18,7 @@
     <app-pedal-board-setup
       [blocks]="activePreset()?.pedalSetup!"
       (blockTapped)="openEditorToolbar($event)"
-      (contextMenuBlock)="toggleEnabledBlock($event)"
+      (contextMenuBlock)="onContextMenuFromBlocks($event)"
     />
   </section>
 
