@@ -1,6 +1,6 @@
 @use 'layout-mixins' as *;
 @use 'animation-mixins' as *;
-@use 'colors' as *;
+@use 'color-variants' as *;
 
 // Springy curve so the pedal settles instead of snapping
 $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
@@ -16,17 +16,18 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
     // block down to the center of the pedal, so a cable can line up with it
     --pedal-center: calc(var(--_pad) + var(--_size) / 2);
 
-    // Palette fallbacks. Every .effectBlock__<type> class below overrides them,
-    // so the rest of the sheet never mentions a category again.
-    --block-color: var(--color-outline);
-    --block-face: var(--color-surface-container-highest);
-    --block-rim: var(--color-outline-variant);
-    --block-glyph: var(--color-on-surface);
+    // Palette fallbacks (short names: color/face/rim/glyph). Every
+    // .effectBlock__<type> class below overrides them, so the rest of the
+    // sheet never mentions a category again.
+    --bc: var(--color-outline);
+    --bf: var(--color-surface-container-highest);
+    --br: var(--color-outline-variant);
+    --bg: var(--color-on-surface);
 }
 
 .effectBlock {
     cursor: pointer;
-    color: var(--block-glyph);
+    color: var(--bg);
     gap: calc(var(--_size) * 0.09);
     padding-block: var(--_pad);
     -webkit-tap-highlight-color: transparent;
@@ -48,24 +49,22 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         padding: calc(var(--_size) * 0.21);
         border-radius: 50%;
         overflow: hidden;
-        border: max(1.5px, calc(var(--_size) * 0.022)) solid var(--block-rim);
+        border: max(1.5px, calc(var(--_size) * 0.022)) solid var(--br);
         background:
             radial-gradient(
                 circle at 50% 16%,
-                color-mix(in srgb, var(--block-rim) 55%, transparent),
+                color-mix(in srgb, var(--br) 55%, transparent),
                 transparent 65%
             ),
             linear-gradient(
                 180deg,
-                color-mix(in srgb, white 7%, var(--block-face)),
-                color-mix(in srgb, black 20%, var(--block-face))
+                color-mix(in srgb, white 7%, var(--bf)),
+                color-mix(in srgb, black 20%, var(--bf))
             );
         box-shadow:
-            inset 0 calc(var(--_size) * 0.015) 0 color-mix(in srgb, white 16%, transparent),
-            inset 0 calc(var(--_size) * -0.07) calc(var(--_size) * 0.16)
-                color-mix(in srgb, black 40%, transparent),
+            inset 0 calc(var(--_size) * -0.07) calc(var(--_size) * 0.16) rgb(0 0 0 / 40%),
             0 calc(var(--_size) * 0.05) calc(var(--_size) * 0.13) calc(var(--_size) * -0.05)
-                color-mix(in srgb, black 70%, transparent);
+                rgb(0 0 0 / 70%);
         @include flex();
         @include transition(
             (transform, box-shadow, border-color, opacity, filter),
@@ -82,8 +81,8 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
             border-radius: inherit;
             background: radial-gradient(
                 circle at 50% 12%,
-                color-mix(in srgb, var(--block-color) 38%, transparent),
-                color-mix(in srgb, var(--block-rim) 60%, transparent) 72%
+                color-mix(in srgb, var(--bc) 38%, transparent),
+                color-mix(in srgb, var(--br) 60%, transparent) 72%
             );
             opacity: 0;
             pointer-events: none;
@@ -99,7 +98,7 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
             border-radius: inherit;
             background: linear-gradient(
                 202deg,
-                color-mix(in srgb, white 20%, transparent) 0%,
+                rgb(255 255 255 / 20%) 0%,
                 transparent 44%
             );
             opacity: 0.7;
@@ -108,7 +107,7 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         &:focus-visible {
-            outline: 2px solid var(--block-color);
+            outline: 2px solid var(--bc);
             outline-offset: 3px;
         }
     }
@@ -123,14 +122,13 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         border-radius: 50%;
         background: radial-gradient(
             circle at 34% 28%,
-            color-mix(in srgb, white 80%, var(--block-color)) 0%,
-            var(--block-color) 52%,
-            color-mix(in srgb, black 35%, var(--block-color)) 100%
+            color-mix(in srgb, white 80%, var(--bc)) 0%,
+            var(--bc) 52%,
+            color-mix(in srgb, black 35%, var(--bc)) 100%
         );
         box-shadow:
-            0 0 0 1px color-mix(in srgb, black 55%, transparent),
-            0 0 calc(var(--_size) * 0.07) color-mix(in srgb, var(--block-color) 85%, transparent),
-            0 0 calc(var(--_size) * 0.18) color-mix(in srgb, var(--block-color) 45%, transparent);
+            0 0 0 1px rgb(0 0 0 / 55%),
+            0 0 calc(var(--_size) * 0.1) color-mix(in srgb, var(--bc) 70%, transparent);
         animation: effectBlockLedBreath 3.2s ease-in-out infinite;
         @include transition((box-shadow, opacity), $fast-duration);
     }
@@ -161,29 +159,21 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .effectBlock__icon {
-            border-color: color-mix(in srgb, var(--block-color) 75%, var(--block-rim));
+            border-color: color-mix(in srgb, var(--bc) 75%, var(--br));
             box-shadow:
-                inset 0 calc(var(--_size) * 0.015) 0 color-mix(in srgb, white 22%, transparent),
-                inset 0 calc(var(--_size) * -0.07) calc(var(--_size) * 0.16)
-                    color-mix(in srgb, black 35%, transparent),
+                inset 0 calc(var(--_size) * 0.015) 0 rgb(255 255 255 / 22%),
                 0 0 0 calc(var(--_size) * 0.045)
-                    color-mix(in srgb, var(--block-color) 13%, transparent),
+                    color-mix(in srgb, var(--bc) 13%, transparent),
                 0 calc(var(--_size) * 0.1) calc(var(--_size) * 0.22) calc(var(--_size) * -0.06)
-                    color-mix(in srgb, black 75%, transparent),
-                0 calc(var(--_size) * 0.05) calc(var(--_size) * 0.3)
-                    color-mix(in srgb, var(--block-color) 22%, transparent);
+                    rgb(0 0 0 / 75%);
 
             &::before {
                 opacity: 1;
             }
-
-            &::after {
-                opacity: 0.9;
-            }
         }
 
         .effectBlock__name {
-            color: var(--block-color);
+            color: var(--bc);
             transform: translateY(-2px);
         }
     }
@@ -196,11 +186,7 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .effectBlock__icon {
-            box-shadow:
-                inset 0 calc(var(--_size) * 0.03) calc(var(--_size) * 0.1)
-                    color-mix(in srgb, black 55%, transparent),
-                0 0 0 calc(var(--_size) * 0.03)
-                    color-mix(in srgb, var(--block-color) 16%, transparent);
+            box-shadow: inset 0 calc(var(--_size) * 0.03) calc(var(--_size) * 0.1) rgb(0 0 0 / 55%);
             transition-duration: 90ms;
         }
     }
@@ -210,16 +196,9 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
     &--bypassed {
         .effectBlock__icon {
             border-style: dashed;
-            border-color: color-mix(in srgb, var(--block-color) 40%, var(--block-rim));
-            background:
-                radial-gradient(
-                    circle at 50% 20%,
-                    color-mix(in srgb, var(--block-color) 14%, transparent),
-                    transparent 72%
-                ),
-                color-mix(in srgb, var(--block-face) 75%, transparent);
-            box-shadow: inset 0 0 calc(var(--_size) * 0.14)
-                color-mix(in srgb, black 30%, transparent);
+            border-color: color-mix(in srgb, var(--bc) 40%, var(--br));
+            background: color-mix(in srgb, var(--bf) 75%, transparent);
+            box-shadow: inset 0 0 calc(var(--_size) * 0.14) rgb(0 0 0 / 30%);
             filter: grayscale(0.2);
             opacity: 0.78;
 
@@ -230,7 +209,7 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
 
         .effectBlock__name {
             font-weight: 500;
-            color: color-mix(in srgb, var(--block-color) 45%, var(--color-on-surface));
+            color: color-mix(in srgb, var(--bc) 45%, var(--color-on-surface));
             opacity: 0.7;
         }
 
@@ -238,12 +217,10 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         .effectBlock__led {
             background: radial-gradient(
                 circle at 34% 28%,
-                color-mix(in srgb, white 20%, var(--block-color)),
-                color-mix(in srgb, var(--block-color) 45%, var(--color-outline-variant)) 70%
+                color-mix(in srgb, white 20%, var(--bc)),
+                color-mix(in srgb, var(--bc) 45%, var(--color-outline-variant)) 70%
             );
-            box-shadow:
-                inset 0 1px 2px color-mix(in srgb, black 60%, transparent),
-                0 0 0 1px color-mix(in srgb, black 45%, transparent);
+            box-shadow: inset 0 1px 2px rgb(0 0 0 / 60%);
             opacity: 0.6;
             animation: none;
         }
@@ -251,10 +228,6 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         &:hover .effectBlock__icon {
             filter: none;
             opacity: 0.95;
-            box-shadow:
-                inset 0 0 calc(var(--_size) * 0.14) color-mix(in srgb, black 25%, transparent),
-                0 0 0 calc(var(--_size) * 0.035)
-                    color-mix(in srgb, var(--block-color) 12%, transparent);
         }
     }
 }
@@ -274,10 +247,10 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
 
 @each $category in $pedal-categories {
     .effectBlock__#{$category} {
-        --block-color: var(--color-#{$category});
-        --block-face: var(--color-on-#{$category});
-        --block-rim: var(--color-#{$category}-container);
-        --block-glyph: var(--color-on-#{$category}-container);
+        --bc: var(--color-#{$category});
+        --bf: var(--color-on-#{$category});
+        --br: var(--color-#{$category}-container);
+        --bg: var(--color-on-#{$category}-container);
     }
 }
 
@@ -285,8 +258,8 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
 .effectBlock__empty {
     .effectBlock__icon {
         border-style: dashed;
-        background: color-mix(in srgb, var(--block-face) 55%, transparent);
-        box-shadow: inset 0 0 calc(var(--_size) * 0.12) color-mix(in srgb, black 30%, transparent);
+        background: color-mix(in srgb, var(--bf) 55%, transparent);
+        box-shadow: inset 0 0 calc(var(--_size) * 0.12) rgb(0 0 0 / 30%);
         opacity: 0.7;
 
         &::after {
@@ -329,6 +302,6 @@ $pedal-curve: cubic-bezier(0.22, 1, 0.36, 1);
         position: relative;
         z-index: 1;
         display: inline-flex;
-        filter: drop-shadow(0 1px 1px color-mix(in srgb, black 45%, transparent));
+        filter: drop-shadow(0 1px 1px rgb(0 0 0 / 45%));
     }
 }
