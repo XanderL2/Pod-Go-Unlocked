@@ -107,25 +107,36 @@ export class PresetEditorPage {
     this.presetEditorState.clearActivePreset();
   }
 
-  exportPreset(): void {
+  async exportPreset(): Promise<void> {
     try {
-      const exportedPreset = this.presetEditorState.exportPreset(this.activePreset()!);
-      this.downloadPreset(exportedPreset);
+      const exportablePreset = this.presetEditorState.toExportablePreset(this.activePreset()!);
+      const fileName = `${this.activePreset()?.name || 'preset'} unlocked.pgp`;
+      await this.downloadPreset(exportablePreset, fileName);
     } catch (error) {
+      if ((error as Error)?.name === 'AbortError') return;
       this.toastLauncher.error('Oops! An error occurred.', error as string);
     }
   }
 
-  downloadPreset(presetContent: string): void {
-    const blob = new Blob([presetContent], {
-      type: 'application/json',
-    });
+  private async downloadPreset(fileContent: string, fileName: string): Promise<void> {
+    if ('showSaveFilePicker' in window) {
+      const handle = await (window as any).showSaveFilePicker({
+        suggestedName: fileName,
+        types: [{ description: 'POD Go Preset', accept: { 'application/json': ['.pgp'] } }],
+      });
 
+      const writable = await handle.createWritable();
+      await writable.write(fileContent);
+      await writable.close();
+      return;
+    }
+
+    const blob = new Blob([fileContent], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
 
     link.href = url;
-    link.download = 'preset.pgp';
+    link.download = fileName;
     link.click();
 
     URL.revokeObjectURL(url);

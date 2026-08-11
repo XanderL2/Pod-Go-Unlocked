@@ -63,8 +63,8 @@ export class PresetEditorState {
     );
   }
 
-  exportPreset(preset: Preset) : string {
-    return this._toExportablePresetUseCase.export(preset);
+  toExportablePreset(preset: Preset) : string {
+    return this._toExportablePresetUseCase.build(preset);
   }
 
   // Private methods: 

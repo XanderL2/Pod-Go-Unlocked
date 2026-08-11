@@ -10,7 +10,7 @@ export class ToExportablePresetUseCase {
 
   private readonly _repositoryImpl: PresetRepository = inject(PresetRepositoryImpl);
 
-  export(preset: Preset): string {
+  build(preset: Preset): string {
     return this._repositoryImpl.toExportablePresetData(preset);
   }
   
