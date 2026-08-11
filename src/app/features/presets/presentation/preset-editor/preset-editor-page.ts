@@ -1,10 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { PresetEditorState } from './services/preset-editor-state';
 import { Button } from '../../../../shared/components/buttons/button/button';
-import {
-  BlockCategory,
-  PresetBlock,
-} from '../../domain/entities/preset-entities';
+import { BlockCategory, PresetBlock } from '../../domain/entities/preset-entities';
 import { BottomSheet } from '../../../../shared/components/overlays/bottom-sheet/bottom-sheet';
 import { PedalBoardSetup } from './components/pedal-board-setup/pedal-board-setup';
 import {
@@ -12,7 +9,7 @@ import {
   EditPresetPanel,
 } from './components/edit-preset-panel/edit-preset-panel';
 import { ToastLauncher } from '../../../../shared/components/feedback/toast/controller/toast-launcher';
-import { Icon } from "../../../../shared/components/icons/icon/icon";
+import { Icon } from '../../../../shared/components/icons/icon/icon';
 import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
 import { Location } from '@angular/common';
 
@@ -49,14 +46,15 @@ export class PresetEditorPage {
       () => this.presetEditorState.clearBlock(this.tappedBlock()?.id!),
     ],
 
-    // Replaceable actions: 
+    // Replaceable actions:
     [
       EDIT_PRESET_PANEL_ACTIONS.REPLACE_WITH_WAH,
       () => this.presetEditorState.replaceBlockBy(BlockCategory.WAH_BLOCK, this.tappedBlock()?.id!),
     ],
     [
       EDIT_PRESET_PANEL_ACTIONS.REPLACE_WITH_VOLUME,
-      () => this.presetEditorState.replaceBlockBy(BlockCategory.VOLUME_BLOCK, this.tappedBlock()?.id!),
+      () =>
+        this.presetEditorState.replaceBlockBy(BlockCategory.VOLUME_BLOCK, this.tappedBlock()?.id!),
     ],
     [
       EDIT_PRESET_PANEL_ACTIONS.REPLACE_WITH_EQ,
@@ -110,6 +108,26 @@ export class PresetEditorPage {
   }
 
   exportPreset(): void {
-    // TODO: CREAR EXPORT DE PRESET
+    try {
+      const exportedPreset = this.presetEditorState.exportPreset(this.activePreset()!);
+      this.downloadPreset(exportedPreset);
+    } catch (error) {
+      this.toastLauncher.error('Oops! An error occurred.', error as string);
+    }
+  }
+
+  downloadPreset(presetContent: string): void {
+    const blob = new Blob([presetContent], {
+      type: 'application/json',
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = 'preset.pgp';
+    link.click();
+
+    URL.revokeObjectURL(url);
   }
 }

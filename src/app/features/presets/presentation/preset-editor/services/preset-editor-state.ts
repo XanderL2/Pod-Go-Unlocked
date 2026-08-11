@@ -4,6 +4,7 @@ import { Preset, REPLACEABLE_BLOCKS } from '../../../domain/entities/preset-enti
 import { EnableDisableBlockUseCase } from '../../../domain/use-cases/enable-disable-block-use-case';
 import { ClearPresetBlockUseCase } from '../../../domain/use-cases/clear-preset-block-use-case';
 import { ReplacePresetBlockUseCase } from '../../../domain/use-cases/replace-preset-block-use-case';
+import { ToExportablePresetUseCase } from '../../../domain/use-cases/to-exportable-preset-use-case';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class PresetEditorState {
   private readonly _enableDisableBlockUseCase = inject(EnableDisableBlockUseCase);
   private readonly _clearPresetBlockUseCase = inject(ClearPresetBlockUseCase);
   private readonly _replaceBlockUseCase = inject(ReplacePresetBlockUseCase);
+  private readonly _toExportablePresetUseCase = inject(ToExportablePresetUseCase);
 
   // Properties
   private _activePreset = signal<Preset | null>(null);
@@ -22,6 +24,14 @@ export class PresetEditorState {
 
 
   // Methods:
+  loadPresetToEditor(preset: Preset): void {
+    this._activePreset.set(preset);
+  }
+
+  clearActivePreset(): void {
+    this._activePreset.set(null);
+  }
+
   enableBlock(blockId: number): void {
     this.assertValidPreset(this.activePreset()!);
     this._activePreset.update((prevValuePreset) =>
@@ -42,13 +52,8 @@ export class PresetEditorState {
   }
 
   clearBlock(blockId: number): void {
-
     this.assertValidPreset(this.activePreset()!)
     this._activePreset.update((prevValuePreset) => this._clearPresetBlockUseCase.removeEffect(blockId, prevValuePreset!))
-  }
-
-  loadPresetToEditor(preset: Preset): void {
-    this._activePreset.set(preset);
   }
 
   replaceBlockBy(blockType: REPLACEABLE_BLOCKS, blockId: number): void {
@@ -58,10 +63,9 @@ export class PresetEditorState {
     );
   }
 
-  clearActivePreset(): void {
-    this._activePreset.set(null);
+  exportPreset(preset: Preset) : string {
+    return this._toExportablePresetUseCase.export(preset);
   }
-
 
   // Private methods: 
   private assertValidPreset(preset: Preset) {

@@ -105,6 +105,18 @@ export interface ToneDsp0 {
     output: Output;
 }
 
+export type Dsp0BlockKey =
+  | 'block0'
+  | 'block1'
+  | 'block2'
+  | 'block3'
+  | 'block4'
+  | 'block5'
+  | 'block6'
+  | 'block7'
+  | 'block8'
+  | 'block9';
+
 /**
  * A flexible layout for any effect block and its knobs.
  */
