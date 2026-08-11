@@ -11,8 +11,14 @@
   gap: 1rem;
 
   &__buttons {
-    padding-inline: 2.5rem;
-    @include flex(space-between, center);
+    @include flex(space-around, center);
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+    @include screen('md') {
+      padding-inline: 2.5rem;
+      @include flex(space-between, center);
+    }
   }
 
   &__details {
