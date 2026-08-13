@@ -46,8 +46,8 @@ export interface DataMeta {
  * The full tone structure (blocks, scenes, switches, and expression pedals).
  */
 export interface Tone {
-    /** Expression pedal and external controller settings */
-    controller: Controller;
+    /** Expression pedal and external controller settings (absent when no block is pedal-driven) */
+    controller?: Controller;
     /** The 10 hardware effect blocks, input, and output */
     dsp0: ToneDsp0;
     /** Secondary chip data (Always empty {} on POD Go) */
@@ -233,8 +233,8 @@ export interface Snapshot {
     "@valid": boolean;
     /** On/Off map for all 10 blocks in this scene */
     blocks: SnapshotBlocks;
-    /** Expression pedal values for this scene */
-    controllers: SnapshotControllers;
+    /** Expression pedal values for this scene (absent when no block is pedal-driven) */
+    controllers?: SnapshotControllers;
 }
 
 /**
