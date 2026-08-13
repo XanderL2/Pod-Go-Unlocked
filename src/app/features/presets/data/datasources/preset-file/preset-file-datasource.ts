@@ -13,6 +13,7 @@ import { DEFAULT_BLOCKS_BY_TYPE } from './block-definitions-by-type';
   providedIn: 'root',
 })
 export class PresetFileDataSource {
+
   // Public methods:
   toPresetModel(rawPreset: string): PodGoPresetModel {
     return PresetFileMapper.toPresetModel(rawPreset);
@@ -29,8 +30,6 @@ export class PresetFileDataSource {
     const originalBlocks = this.getRawBlocks(originalDsp);
     const updatedBlocks = this.buildUpdatedBlocks(editedBlocks, originalBlocks);
     const podGoPresetUpdated = this.applyUpdatesOnPodGoPreset(originalRawPreset, updatedBlocks);
-
-    console.log("DEBUG - UPDATED BLOCKS", updatedBlocks);
 
     return JSON.stringify(podGoPresetUpdated);
   }
@@ -98,6 +97,7 @@ export class PresetFileDataSource {
     updates: Block[],
   ): PodGoPresetModel {
     const updatedPreset = structuredClone(rawPreset);
+    updatedPreset.data.meta.name = updatedPreset.data.meta.name + " unlocked";
 
     for (const update of updates) {
       const blockKey = `block${update['@position']}` as Dsp0BlockKey;
