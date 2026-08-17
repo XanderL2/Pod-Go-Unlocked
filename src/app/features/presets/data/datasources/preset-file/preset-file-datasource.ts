@@ -13,7 +13,10 @@ import {
   Snapshot,
   Tone,
 } from '../../models/preset-models';
-import { DEFAULT_BLOCKS_BY_TYPE } from './block-definitions-by-type';
+import {
+  DEFAULT_BLOCKS_BY_TYPE,
+  EXPRESSION_PEDAL_FOOTSWITCH_BY_TYPE,
+} from './block-definitions-by-type';
 
 /** Name of the block parameter driven by an expression pedal (wah and volume both use it). */
 const EXPRESSION_PEDAL_PARAM = 'Pedal';
@@ -65,10 +68,7 @@ export class PresetFileDataSource {
       );
 
       this.syncExpressionPedalBinding(updatedPreset.data.tone, blockKey, editedBlock.type);
-
-      if (isCleared) {
-        delete updatedPreset.data.tone.footswitch?.dsp0?.[blockKey];
-      }
+      this.syncFootswitch(updatedPreset.data.tone, blockKey, editedBlock, isCleared);
     });
 
     return JSON.stringify(updatedPreset);
@@ -166,6 +166,39 @@ export class PresetFileDataSource {
         },
       };
     });
+  }
+
+  /**
+   * Keeps the footswitch entry aligned with the block sitting in this slot.
+   * A pedal-driven block needs an entry on the expression pedal toe switch index or the
+   * hardware has no way to reach it, and `@fs_enabled` always mirrors the block bypass
+   * state in files written by POD Go Edit.
+   */
+  private syncFootswitch(
+    tone: Tone,
+    blockKey: Dsp0BlockKey,
+    editedBlock: PresetBlock,
+    isCleared: boolean,
+  ): void {
+    tone.footswitch ??= { dsp0: {} };
+    tone.footswitch.dsp0 ??= {};
+
+    const footswitches = tone.footswitch.dsp0;
+
+    if (isCleared) {
+      delete footswitches[blockKey];
+      return;
+    }
+
+    const buildFootswitch = EXPRESSION_PEDAL_FOOTSWITCH_BY_TYPE[editedBlock.type];
+
+    if (buildFootswitch && !footswitches[blockKey]) {
+      footswitches[blockKey] = buildFootswitch();
+    }
+
+    if (footswitches[blockKey]) {
+      footswitches[blockKey]['@fs_enabled'] = editedBlock.enabled;
+    }
   }
 
   private getSnapshots(tone: Tone): Snapshot[] {
