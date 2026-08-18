@@ -31,9 +31,9 @@
             <button
               type="button"
               class="header__tab"
-              [class.header__tab--active]="activeNavItem() === item.id"
-              [attr.aria-current]="activeNavItem() === item.id ? 'page' : null"
-              (click)="selectNavItem(item.id)"
+              [class.header__tab--active]="activeNavItem()?.id === item.id"
+              [attr.aria-current]="activeNavItem()?.id === item.id ? 'page' : null"
+              (click)="selectNavItem(item)"
             >
               <app-icon [size]="'sm'" [url]="feedbackIconsPath + item.icon"></app-icon>
               <span class="header__tabLabel">{{ item.label }}</span>
