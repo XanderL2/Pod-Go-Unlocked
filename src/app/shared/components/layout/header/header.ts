@@ -1,9 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  linkedSignal,
+  signal,
+} from '@angular/core';
 import { Icon } from '../../icons/icon/icon';
 import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
 import { NavigationEnd, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs';
+import { filter, map, single, take } from 'rxjs';
 
 interface NavItem {
   id: number;
@@ -52,16 +59,16 @@ export class Header {
   toggleIcon = computed(() => (this.menuExpanded() ? '/menu-up.svg' : '/menu-down.svg'));
 
   navItems = NAV_ITEMS;
-  currentUrl = toSignal(
+  starterRoute = toSignal(
     this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      map(() => this.router.url),
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      map((event) => event.urlAfterRedirects),
+      take(1),
     ),
-    { initialValue: this.router.url },
   );
 
-  activeNavItem = computed(() =>
-    NAV_ITEMS.find((navItem) => navItem.route === this.currentUrl()),
+  activeNavItem = linkedSignal(() =>
+    NAV_ITEMS.find((navId) => navId.route === this.starterRoute()),
   );
 
   // Methods:
@@ -71,6 +78,7 @@ export class Header {
 
   selectNavItem(selectedNavItem: NavItem): void {
     this.menuExpanded.set(false);
+    this.activeNavItem.set(selectedNavItem);
     this.router.navigate([selectedNavItem.route]);
   }
 }
