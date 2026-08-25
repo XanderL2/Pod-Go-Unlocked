@@ -11,7 +11,6 @@ import { Preset } from '../../domain/entities/preset-entities';
 })
 export class RestoreBlockPage {
 
-  
   private presetEditorState = inject(PresetEditorState);
   private router = inject(Router);
 

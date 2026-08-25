@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FileInput } from '../../../../shared/components/inputs/file-input/file-input';
+import { Component, inject } from '@angular/core';
 import { PresetEditorState } from '../preset-editor/services/preset-editor-state';
 import { UploadPresetPage } from "../common/pages/upload-preset-page/upload-preset-page";
-import { PodGoPresetModel } from '../../data/models/preset-models';
 import { Router } from '@angular/router';
 import { Preset } from '../../domain/entities/preset-entities';
 

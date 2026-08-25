@@ -3,6 +3,7 @@ import { UnlockPresetPage } from './presentation/unlock-preset/unlock-preset-pag
 import { PresetEditorPage } from './presentation/preset-editor/preset-editor-page';
 import { presetLoadedGuard } from './presentation/preset-editor/guards/preset-loaded-guard';
 import { RestoreBlockPage } from './presentation/restore-block/restore-block-page';
+import { UnlockedTemplatesPage } from './presentation/unlocked-templates/unlocked-templates-page';
 
 export const UNLOCK_PRESET_ROUTES: Routes = [
   {
@@ -12,6 +13,10 @@ export const UNLOCK_PRESET_ROUTES: Routes = [
   {
     path: 'restore-block',
     component: RestoreBlockPage
+  },
+  {
+    path: 'unlocked-templates',
+    component: UnlockedTemplatesPage
   },
   {
     path: 'preset-editor',

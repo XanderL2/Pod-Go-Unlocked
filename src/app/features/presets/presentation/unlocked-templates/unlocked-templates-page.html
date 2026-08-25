@@ -1,1 +1,25 @@
-<p>unlocked-templates-page works!</p>,
+<main class="main">
+  <section class="main__content">
+    <div class="main__header">
+      <h1 class="main__title">Unlocked Templates</h1>
+      <p class="main__description">
+        Start with a clean template and free up DSP for your own setup.
+      </p>
+    </div>
+
+    @for (template of UNLOCKED_TEMPLATES; track $index) {
+      <app-card
+        [title]="template.title"
+        [description]="template.description"
+        [imagePath]="template.image"
+      >
+        <div class="main__downloadButtonContainer">
+          <button class="main__download-button">
+            <app-icon url="icons/feedback/download-file.svg" size="sm"></app-icon>
+            Download
+          </button>
+        </div>
+      </app-card>
+    }
+  </section>
+</main>
