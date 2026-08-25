@@ -14,7 +14,10 @@
         [imagePath]="template.image"
       >
         <div class="main__downloadButtonContainer">
-          <button class="main__download-button">
+          <button 
+            (click)="onDownloadTemplate(template)" 
+            class="main__download-button"
+            >
             <app-icon url="icons/feedback/download-file.svg" size="sm"></app-icon>
             Download
           </button>
