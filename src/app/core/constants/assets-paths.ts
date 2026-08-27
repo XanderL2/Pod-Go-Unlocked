@@ -9,6 +9,6 @@ export const ASSET_PATHS = {
     identity: `${ICONS_BASE}/identity`,
   },
   images: {
-    hero: `${IMAGES_BASE}/hero.webp`,
+    'import-tutorial':`${IMAGES_BASE}/import-export-tutorial`,
   },
 } as const;

@@ -4,10 +4,11 @@ import { PresetEditorState } from "../../../preset-editor/services/preset-editor
 import { ToastLauncher } from '../../../../../../shared/components/feedback/toast/controller/toast-launcher';
 import { Preset } from "../../../../domain/entities/preset-entities";
 import { ASSET_PATHS } from "../../../../../../core/constants/assets-paths";
+import { Separator } from "../../../../../../shared/components/layout/separator/separator";
 
 @Component({
   selector: 'app-upload-preset-page',
-  imports: [FileInput],
+  imports: [FileInput, Separator],
   templateUrl: './upload-preset-page.html',
   styleUrl: './upload-preset-page.scss',
 })
@@ -26,6 +27,7 @@ export class UploadPresetPage {
 
   // Properties
   feedbackIconsPath = ASSET_PATHS.icons.feedback;
+  tutorialImagesPath = ASSET_PATHS.images["import-tutorial"];
 
 
   async handlePresetUpload(files: FileList) {

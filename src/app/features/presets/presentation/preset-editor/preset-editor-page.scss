@@ -7,18 +7,22 @@
 
   padding: 2rem;
   color: var(--color-on-background);
-  @include flex(center, stretch, column);
+  @include flex(flex-start, stretch, column);
   gap: 1rem;
+
+  background: linear-gradient(
+    180deg,
+    var(--color-background),
+    var(--color-secondary-container) 50%,
+    var(--color-background)
+  );
 
   &__buttons {
     @include flex(space-around, center);
     flex-wrap: wrap;
     gap: 1rem;
     
-    @include screen('md') {
-      padding-inline: 2.5rem;
-      @include flex(space-between, center);
-    }
+
   }
 
   &__details {
@@ -26,5 +30,8 @@
     gap: 0.5rem;
   }
 
+  @include screen('lg') {
+    min-height: calc(100dvh - 246px);
+  }
 }
 

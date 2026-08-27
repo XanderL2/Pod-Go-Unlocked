@@ -12,10 +12,11 @@ import { ToastLauncher } from '../../../../shared/components/feedback/toast/cont
 import { Icon } from '../../../../shared/components/icons/icon/icon';
 import { ASSET_PATHS } from '../../../../core/constants/assets-paths';
 import { Location } from '@angular/common';
+import { Separator } from "../../../../shared/components/layout/separator/separator";
 
 @Component({
   selector: 'app-preset-editor-page',
-  imports: [PedalBoardSetup, Button, BottomSheet, EditPresetPanel, Icon],
+  imports: [PedalBoardSetup, Button, BottomSheet, EditPresetPanel, Icon, Separator],
   templateUrl: './preset-editor-page.html',
   styleUrl: './preset-editor-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

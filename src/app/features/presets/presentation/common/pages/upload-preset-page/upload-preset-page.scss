@@ -1,31 +1,92 @@
 @use 'layout-mixins' as *;
 @use 'responsive-utilities' as *;
-
+@use 'animation-mixins' as *;
 
 .main {
 
-  &__content {
-    color: var(--color-on-background);
+  color: var(--color-on-background);
+
+  &__section {
     padding: 2rem;
     @include flex(flex-start, center, column);
     gap: 2rem;
+  }
 
-    &--titles {
-      @include flex(center, center, column);
-      text-align: center;
-    }
+  &__titles {
+    @include flex(center, center, column);
+    text-align: center;
+    gap: 0.325rem;
+  }
 
-    &--dropZone {
-      align-self: stretch;
-      width: 100%;
-      max-width: 700px;
+  &__dropZoneInput {
+    align-self: stretch;
+    width: 100%;
+    max-width: 700px;
 
-      @include screen('md') {
-        align-self: auto;
-        width: 70%;
-      }
-    
+    @include screen('md') {
+      align-self: auto;
+      width: 70%;
     }
   }
+
+
+  &__tutorialSection {
+    padding: 6rem 2rem;
+
+    @include flex(flex-start, center, column);
+    gap: 2.5rem;
+
+    background: linear-gradient(180deg,
+        var(--color-background),
+        var(--color-secondary-container) 50%,
+        var(--color-background));
+  }
+
+
+
+  &__requirementsContainer {
+    padding: 1.5rem;
+    padding-inline: 2.5rem;
+    border: 1px solid var(--color-outline-variant);
+    border-radius: 1rem;
+
+    color: var(--color-on-secondary-container);
+    background: linear-gradient(135deg,
+        var(--color-tertiary-container),
+        var(--color-secondary-container));
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.12),
+      0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+
+  &__requirementsList {
+    list-style: decimal;
+
+    li::marker {
+      color: var(--color-surface-tint);
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    @include transition((color, scale), $fast-duration);
+    color: var(--color-info);
+
+    &:hover {
+      scale: 1.02;
+      color: var(--color-success);
+    }
+  }
+
+  &__tutorialImage {
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-outline-variant);
+    width: 100%;
+    max-width: 700px;
+    box-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.12),
+      0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+
 
 }

@@ -1,10 +1,11 @@
 <main class="main">
-  <section class="main__content">
-    <div class="main__content--titles">
+  <section class="main__section">
+    <div class="main__titles">
       <h1>{{ title() }}</h1>
       <p>{{ subTitle() }}</p>
     </div>
-    <div class="main__content--dropZone">
+
+    <div class="main__dropZoneInput">
       <app-file-input
         accept=".pgp"
         label="Drop your PodGo Preset here!"
@@ -14,5 +15,34 @@
       />
     </div>
   </section>
-</main>
 
+  <app-separator></app-separator>
+
+  <section class="main__tutorialSection">
+    <div class="main__titles">
+      <h2>How to Import and Export Presets from Your Pod Go</h2>
+      <p>Follow these simple steps to import or export your presets.</p>
+    </div>
+
+    <div class="main__requirementsContainer">
+      <ol class="main__requirementsList">
+        <li>
+          Install and set up Pod Go Edit.
+          <a href="https://line6.com/software/index.html?hardware=All&name=POD%20Go%20Edit&os=All&submit_form=set" class="main__link">Install here</a>
+        </li>
+
+        <li>Find your preset in the <strong>User Presets</strong> list.</li>
+
+        <li>Open the <strong>File</strong> menu in the macOS menu bar at the top of the screen.</li>
+
+        <li>Select <strong>Import</strong> or <strong>Export</strong>.</li>
+      </ol>
+    </div>
+
+    <img
+      class="main__tutorialImage"
+      [src]="tutorialImagesPath + '/import-export-tutorial.webp'"
+      alt="How to import and export presets in Pod Go Edit"
+    />
+  </section>
+</main>
